@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.awesomegaminghub.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:name="com.example.awesomegaminghub.ui.chat.ChatFragment"
+        android:label="@string/menu_chat"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.awesomegaminghub.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:name="com.example.awesomegaminghub.ui.news.NewsFragment"
+        android:label="@string/menu_news"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>
