@@ -12,13 +12,13 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_chat"
         android:name="com.example.awesomegaminghub.ui.chat.ChatFragment"
         android:label="@string/menu_chat"
         tools:layout="@layout/fragment_chat" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_news"
         android:name="com.example.awesomegaminghub.ui.news.NewsFragment"
         android:label="@string/menu_news"
         tools:layout="@layout/fragment_news" />
