@@ -16,9 +16,13 @@ public class LoginViewModel extends ViewModel {
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private LoginRepository loginRepository;
+    private final MutableLiveData<String> mText;
 
     LoginViewModel(LoginRepository loginRepository) {
+
         this.loginRepository = loginRepository;
+        this.mText = new MutableLiveData<>();
+        this.mText.setValue("hello");
     }
 
     LiveData<LoginFormState> getLoginFormState() {
@@ -29,15 +33,18 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password) {
+    public boolean login(String username, String password) {
         // can be launched in a separate asynchronous job
         Result<LoggedInUser> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
             loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            this.mText.setValue(data.getDisplayName());
+            return true;
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
+            return false;
         }
     }
 
@@ -66,5 +73,8 @@ public class LoginViewModel extends ViewModel {
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
+    }
+    public LiveData<String>  getText(){
+        return mText;
     }
 }

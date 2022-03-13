@@ -36,17 +36,20 @@ public class fragment_login extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
+                .get(LoginViewModel.class);
         binding = FragmentLoginBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        View root = binding.getRoot();
+        final TextView textView = binding.loginTextView;
+        loginViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        return root;
 
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+
 
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;

@@ -18,14 +18,14 @@ public class NewsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NewsViewModel slideshowViewModel =
+        NewsViewModel newsViewModel =
                 new ViewModelProvider(this).get(NewsViewModel.class);
 
         binding = FragmentNewsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textNews;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        newsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
