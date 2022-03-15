@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -40,8 +41,8 @@ public class fragment_login extends Fragment {
                 .get(LoginViewModel.class);
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        final TextView textView = binding.loginTextView;
-        loginViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        //final TextView textView = binding.loginTextView;
+        //loginViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
 
     }
