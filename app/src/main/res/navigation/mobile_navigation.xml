@@ -27,6 +27,10 @@
         android:id="@+id/username"
         android:name="com.example.awesomegaminghub.ui.login.fragment_login"
         android:label="@string/login_View"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_username_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 
 </navigation>

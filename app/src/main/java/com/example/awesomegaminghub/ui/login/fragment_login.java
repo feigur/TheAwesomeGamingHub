@@ -126,6 +126,7 @@ public class fragment_login extends Fragment {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
             }
         });
     }
