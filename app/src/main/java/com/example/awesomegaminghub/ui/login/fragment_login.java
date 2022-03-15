@@ -41,8 +41,8 @@ public class fragment_login extends Fragment {
                 .get(LoginViewModel.class);
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        //final TextView textView = binding.loginTextView;
-        //loginViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.loginTextView;
+        loginViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
 
     }
