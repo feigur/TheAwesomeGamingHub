@@ -5,12 +5,17 @@ pluginManagement {
         mavenCentral()
     }
 }
-dependencyResolutionManagement {
+
+/*dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+        flatDir {
+            dirs "${project(':unityLibrary').projectDir}/libs"
+        }
     }
-}
-rootProject.name = "AwesomeGamingHub"
-include ':app'
+}*/
+include 'app'
+include ':unityLibrary'
+project(':unityLibrary').projectDir=new File('HI-HBV601G\\androidBuild\\unityLibrary')

@@ -1,7 +1,23 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id 'com.android.application' version '7.1.0' apply false
-    id 'com.android.library' version '7.1.0' apply false
+    id 'com.android.application' version '7.1.1' apply false
+    id 'com.android.library' version '7.1.1' apply false
+}
+
+allprojects {
+    buildscript {
+        repositories {
+            google()
+        }
+    }
+
+    repositories {
+        maven { url 'https://repo1.maven.org/maven2' }
+        google()
+        flatDir {
+            dirs "${project(':unityLibrary').projectDir}/libs"
+        }
+    }
 }
 
 task clean(type: Delete) {
