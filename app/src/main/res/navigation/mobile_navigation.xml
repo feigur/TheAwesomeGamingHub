@@ -21,7 +21,11 @@
         android:id="@+id/nav_news"
         android:name="com.example.awesomegaminghub.ui.news.NewsFragment"
         android:label="@string/menu_news"
-        tools:layout="@layout/fragment_news" />
+        tools:layout="@layout/fragment_news" >
+        <action
+            android:id="@+id/newsfeed_to_newspage"
+            app:destination="@id/singleNewsPage" />
+    </fragment>
 
     <fragment
         android:id="@+id/username"
@@ -31,6 +35,16 @@
         <action
             android:id="@+id/action_username_to_nav_home"
             app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleNewsPage"
+        android:name="com.example.awesomegaminghub.ui.news.SingleNewsPage"
+        android:label="fragment_single_news_page"
+        tools:layout="@layout/fragment_single_news_page" >
+        <argument
+            android:name="NewsName"
+            app:argType="string"
+            android:defaultValue="WrongName" />
     </fragment>
 
 </navigation>
