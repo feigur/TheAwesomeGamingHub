@@ -23,6 +23,5 @@ public class SingleNewsPage extends Fragment {
         textView.setText(getArguments().getString("newsName"));
 
         return view;
-
     }
 }
