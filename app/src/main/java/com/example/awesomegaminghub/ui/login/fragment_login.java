@@ -9,6 +9,8 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,14 +25,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.awesomegaminghub.data.model.LoggedInUser;
 import com.example.awesomegaminghub.databinding.FragmentLoginBinding;
 
 import com.example.awesomegaminghub.R;
+import com.google.gson.Gson;
 
 public class fragment_login extends Fragment {
 
     private LoginViewModel loginViewModel;
     private FragmentLoginBinding binding;
+    private Context context;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
 
     @Nullable
     @Override
@@ -43,6 +50,10 @@ public class fragment_login extends Fragment {
         View root = binding.getRoot();
         final TextView textView = binding.loginTextView;
         loginViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        context = getActivity();
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+
         return root;
 
     }
@@ -124,9 +135,15 @@ public class fragment_login extends Fragment {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
+                LoggedInUser loggedInUser = loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
-                Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
+                if(loggedInUser != null){
+                    Gson gson = new Gson();
+                    String json = gson.toJson(loggedInUser);
+                    editor.putString("loggedUser",json);
+                    editor.apply();
+                    Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
+                }
             }
         });
     }

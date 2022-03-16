@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.content.SharedPreferences;
 import android.util.Patterns;
 
 import com.example.awesomegaminghub.data.LoginRepository;
@@ -33,7 +34,7 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public boolean login(String username, String password) {
+    public LoggedInUser login(String username, String password) {
         // can be launched in a separate asynchronous job
         Result<LoggedInUser> result = loginRepository.login(username, password);
 
@@ -41,10 +42,10 @@ public class LoginViewModel extends ViewModel {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
             loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
             this.mText.setValue(data.getDisplayName());
-            return true;
+            return data;
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
-            return false;
+            return null;
         }
     }
 
