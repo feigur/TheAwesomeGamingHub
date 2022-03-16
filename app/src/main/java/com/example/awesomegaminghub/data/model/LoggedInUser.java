@@ -6,10 +6,12 @@ package com.example.awesomegaminghub.data.model;
 public class LoggedInUser{
     private String userId;
     private String displayName;
+    private boolean admin;
 
-    public LoggedInUser(String userId, String displayName) {
+    public LoggedInUser(String userId, String displayName, Boolean admin) {
         this.userId = userId;
         this.displayName = displayName;
+        this.admin = admin;
     }
 
     public String getUserId() {
@@ -19,4 +21,6 @@ public class LoggedInUser{
     public String getDisplayName() {
         return displayName;
     }
+
+    public boolean getAdmin(){ return admin;}
 }

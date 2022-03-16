@@ -1,6 +1,7 @@
 package com.example.awesomegaminghub;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
@@ -15,7 +16,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.awesomegaminghub.databinding.ActivityMainBinding;
-import com.example.awesomegaminghub.databinding.FragmentLoginBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,12 +48,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        //  store the menu to var when creating options menu
         return true;
     }
 
@@ -62,5 +64,19 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void setAdmin(){
+        Menu menu = binding.navView.getMenu();
+        MenuItem item = menu.getItem(3);
+        item.setVisible(true);
+        item.setEnabled(true);
+    }
+
+    public void disableAdmin(){
+        Menu menu = binding.navView.getMenu();
+        MenuItem item = menu.getItem(3);
+        item.setVisible(false);
+        item.setEnabled(false);
     }
 }

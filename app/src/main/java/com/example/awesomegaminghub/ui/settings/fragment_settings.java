@@ -24,8 +24,8 @@ public class fragment_settings extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ChatViewModel galleryViewModel =
-                new ViewModelProvider(this).get(ChatViewModel.class);
+        SettingsViewModel galleryViewModel =
+                new ViewModelProvider(this).get(SettingsViewModel.class);
 
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
