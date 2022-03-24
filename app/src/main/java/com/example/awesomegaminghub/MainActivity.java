@@ -70,14 +70,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void setAdmin(){
         Menu menu = binding.navView.getMenu();
-        MenuItem item = menu.getItem(3);
+        MenuItem item = menu.getItem(4);
         item.setVisible(true);
         item.setEnabled(true);
     }
 
     public void disableAdmin(){
         Menu menu = binding.navView.getMenu();
-        MenuItem item = menu.getItem(3);
+        MenuItem item = menu.getItem(4);
         item.setVisible(false);
         item.setEnabled(false);
     }
