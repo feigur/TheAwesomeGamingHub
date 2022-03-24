@@ -13,9 +13,4 @@
         tools:layout_editor_absoluteX="-119dp"
         tools:layout_editor_absoluteY="72dp"/>
 
-        <TextView
-            android:id="@+id/newsTextTest"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

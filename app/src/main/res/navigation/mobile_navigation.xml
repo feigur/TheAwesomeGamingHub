@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="com.example.awesomegaminghub.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/home_to_game"
+            app:destination="@id/gamePageFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_chat"
@@ -40,17 +44,27 @@
     <fragment
         android:id="@+id/singleNewsPage"
         android:name="com.example.awesomegaminghub.ui.news.SingleNewsPage"
-        android:label="fragment_single_news_page"
-        tools:layout="@layout/fragment_single_news_page" >
+        android:label="@string/single_news_page"
+        tools:layout="@layout/fragment_single_news_page">
         <argument
             android:name="NewsName"
-            app:argType="string"
-            android:defaultValue="WrongName" />
+            android:defaultValue="wrongName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/nav_admin_settings"
         android:name="com.example.awesomegaminghub.ui.settings.fragment_admin_settings"
-        android:label="fragment_settings"
+        android:label="@string/menu_admin_settings"
         tools:layout="@layout/fragment_admin_settings" />
+    <fragment
+        android:id="@+id/gamePageFragment"
+        android:name="com.example.awesomegaminghub.ui.home.GamePageFragment"
+        android:label="@string/game_page"
+        tools:layout="@layout/fragment_game_page">
+        <argument
+            android:name="gameName"
+            android:defaultValue="wrongName"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

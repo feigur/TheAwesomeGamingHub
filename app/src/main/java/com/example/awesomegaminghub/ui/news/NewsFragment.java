@@ -23,22 +23,12 @@ public class NewsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        /*
-        NewsViewModel newsViewModel =
-                new ViewModelProvider(this).get(NewsViewModel.class);
-
-        binding = FragmentNewsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        return root;
-        */
 
         View view = inflater.inflate(R.layout.fragment_news, container, false);
 
         String[] newsFeedArray = {"news1","news2","n3ws","news4"};
 
         ListView listView = (ListView) view.findViewById(R.id.newsPage);
-        final TextView textView = (TextView) view.findViewById(R.id.newsTextTest);
 
         ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
           getActivity(),
@@ -50,7 +40,6 @@ public class NewsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> aV, View view, int position, long id) {
                 String selectedItem = (String) aV.getItemAtPosition(position);
-                //textView.setText("I pressed " + selectedItem);
                 Bundle bundle = new Bundle();
                 bundle.putString("newsName", selectedItem);
                 Navigation.findNavController(view).navigate(R.id.newsfeed_to_newspage, bundle);
