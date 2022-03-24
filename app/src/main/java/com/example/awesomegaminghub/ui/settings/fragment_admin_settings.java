@@ -13,21 +13,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.awesomegaminghub.R;
-import com.example.awesomegaminghub.databinding.FragmentChatBinding;
-import com.example.awesomegaminghub.databinding.FragmentSettingsBinding;
-import com.example.awesomegaminghub.ui.chat.ChatViewModel;
+import com.example.awesomegaminghub.databinding.FragmentAdminSettingsBinding;
 
-public class fragment_settings extends Fragment {
+public class fragment_admin_settings extends Fragment {
 
-    private FragmentSettingsBinding binding;
+    private FragmentAdminSettingsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SettingsViewModel galleryViewModel =
-                new ViewModelProvider(this).get(SettingsViewModel.class);
+        AdminSettingsViewModel galleryViewModel =
+                new ViewModelProvider(this).get(AdminSettingsViewModel.class);
 
-        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        binding = FragmentAdminSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textChat;

@@ -48,9 +48,9 @@
             android:defaultValue="WrongName" />
     </fragment>
     <fragment
-        android:id="@+id/fragment_settings"
-        android:name="com.example.awesomegaminghub.ui.settings.fragment_settings"
+        android:id="@+id/nav_admin_settings"
+        android:name="com.example.awesomegaminghub.ui.settings.fragment_admin_settings"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_admin_settings" />
 
 </navigation>

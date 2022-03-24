@@ -14,8 +14,8 @@
             android:id="@+id/nav_news"
             android:title="@string/menu_news" />
         <item
-            android:id="@+id/fragment_settings"
-            android:title="@string/menu_settings"
+            android:id="@+id/nav_admin_settings"
+            android:title="@string/menu_admin_settings"
             android:visible="true"
             android:enabled="false"/>
     </group>
