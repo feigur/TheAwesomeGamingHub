@@ -14,6 +14,9 @@
             android:id="@+id/nav_news"
             android:title="@string/menu_news" />
         <item
+            android:id="@+id/nav_user_settings"
+            android:title="@string/menu_user_settings"/>
+        <item
             android:id="@+id/nav_admin_settings"
             android:title="@string/menu_admin_settings"
             android:visible="true"
