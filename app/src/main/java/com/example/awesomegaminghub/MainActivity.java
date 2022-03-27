@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    boolean isUnityLoaded = false;
 
-    ActivityResultLauncher<Intent> gameActivityResultLauncher = registerForActivityResult(
+
+/*    ActivityResultLauncher<Intent> gameActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                     }
                 }
-            });
+            });*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +60,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button;
-        button = findViewById(R.id.launchButton);
+/*        Button button;
+        button = findViewById(R.id.playGameButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btnLoadUnity(v);
             }
-        });
+        });*/
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -83,19 +83,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void btnLoadUnity(View v) {
+/*    public void btnLoadUnity(View v) {
         isUnityLoaded = true;
         Intent intent = new Intent(this, MainUnityActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         gameActivityResultLauncher.launch(intent);
         //startActivityForResult(intent, 1);
-    }
+    }*/
 
-    @Override
+/*    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1) isUnityLoaded = false;
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
