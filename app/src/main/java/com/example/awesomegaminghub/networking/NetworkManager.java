@@ -45,7 +45,7 @@ public class NetworkManager {
 
     public void getRecipes(final iNetworkCallback<List<Chat>> callback) {
         StringRequest request = new StringRequest(
-                Request.Method.GET, BASE_URL + "RestpublishedRecipes", new Response.Listener<String>() {
+                Request.Method.GET, BASE_URL + "chat/saekja?username=admin", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Gson gson = new Gson();

@@ -1,10 +1,14 @@
 package com.example.awesomegaminghub;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.awesomegaminghub.entities.Chat;
+import com.example.awesomegaminghub.networking.NetworkManager;
+import com.example.awesomegaminghub.networking.iNetworkCallback;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -20,14 +24,34 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.awesomegaminghub.databinding.ActivityMainBinding;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private List<Chat> mTest;
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Prófa að sækja gögn frá bakenda
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        networkManager.getRecipes(new iNetworkCallback<List<Chat>>() {
+            @Override
+            public void onSuccess(List<Chat> result) {
+                mTest = result;
+                Log.d(TAG, "First recipe in list: " + mTest.get(0).getUsername());
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get Recipes: " + errorString);
+            }
+        });
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
