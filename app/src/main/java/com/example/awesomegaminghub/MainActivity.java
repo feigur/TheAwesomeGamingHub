@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private List<Chat> mTest;
+    private Chat mTest;
 
     private static final String TAG = "MainActivity";
 
@@ -40,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Prófa að sækja gögn frá bakenda
         NetworkManager networkManager = NetworkManager.getInstance(this);
-        networkManager.getRecipes(new iNetworkCallback<List<Chat>>() {
+        networkManager.getRecipes(new iNetworkCallback<Chat>() {
             @Override
-            public void onSuccess(List<Chat> result) {
+            public void onSuccess(Chat result) {
                 mTest = result;
-                Log.d(TAG, "First recipe in list: " + mTest.get(0).getUsername());
+                Log.d(TAG, "First recipe in list: " + mTest.getUsername());
             }
 
             @Override

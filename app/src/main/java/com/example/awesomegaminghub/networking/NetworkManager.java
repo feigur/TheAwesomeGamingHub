@@ -17,7 +17,7 @@ import java.util.FormatFlagsConversionMismatchException;
 import java.util.List;
 
 public class NetworkManager {
-    private static final String BASE_URL = "https://10.0.2.2:8080/";
+    private static final String BASE_URL = "http://10.0.2.2:8080/";
 
     private static NetworkManager mInstance;
     private static RequestQueue mQueue;
@@ -43,14 +43,13 @@ public class NetworkManager {
         return mQueue;
     }
 
-    public void getRecipes(final iNetworkCallback<List<Chat>> callback) {
+    public void getRecipes(final iNetworkCallback<Chat> callback) {
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + "chat/saekja?username=admin", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Gson gson = new Gson();
-                Type listType = new TypeToken<List<Chat>>(){}.getType();
-                List<Chat> recipelist = gson.fromJson(response, listType);
+                Chat recipelist = gson.fromJson(response, Chat.class);
                 callback.onSuccess(recipelist);
             }
         }, new Response.ErrorListener() {
