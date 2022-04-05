@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Chat result) {
                 mTest = result;
-                Log.d(TAG, "First recipe in list: " + mTest.getUsername());
+                Log.d(TAG, "First recipe in list: " + mTest.getChat());
             }
 
             @Override
