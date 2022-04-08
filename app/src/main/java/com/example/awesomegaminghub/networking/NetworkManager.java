@@ -8,7 +8,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.awesomegaminghub.entities.Account;
 import com.example.awesomegaminghub.entities.Chat;
+import com.example.awesomegaminghub.entities.HighScore;
+import com.example.awesomegaminghub.entities.News;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -43,14 +46,76 @@ public class NetworkManager {
         return mQueue;
     }
 
-    public void getRecipes(final iNetworkCallback<Chat> callback) {
+
+    public void getAccount(String accInfo, final iNetworkCallback<Account> callback) {
+        String addToUrl = "account/login?" + accInfo;
         StringRequest request = new StringRequest(
-                Request.Method.GET, BASE_URL + "chat/saekja?username=admin", new Response.Listener<String>() {
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Gson gson = new Gson();
-                Chat recipelist = gson.fromJson(response, Chat.class);
-                callback.onSuccess(recipelist);
+                Account account = gson.fromJson(response, Account.class);
+                callback.onSuccess(account);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
+    public void getChat(String accInfo, final iNetworkCallback<Chat> callback) {
+        String addToUrl = "chat/saekja?username=" + accInfo;
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Chat chat = gson.fromJson(response, Chat.class);
+                callback.onSuccess(chat);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
+    public void getNews(final iNetworkCallback<News> callback) {
+        String addToUrl = "news/saekja";
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                News news = gson.fromJson(response, News.class);
+                callback.onSuccess(news);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
+    public void getHighScore(final iNetworkCallback<HighScore> callback) {
+        String addToUrl = "highscore/saekja";
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                HighScore highScore = gson.fromJson(response, HighScore.class);
+                callback.onSuccess(highScore);
             }
         }, new Response.ErrorListener() {
             @Override

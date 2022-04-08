@@ -6,7 +6,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.awesomegaminghub.entities.Account;
 import com.example.awesomegaminghub.entities.Chat;
+import com.example.awesomegaminghub.entities.HighScore;
+import com.example.awesomegaminghub.entities.News;
 import com.example.awesomegaminghub.networking.NetworkManager;
 import com.example.awesomegaminghub.networking.iNetworkCallback;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,7 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private Chat mTest;
+    private Chat mChat;
+    private Account mAccount;
+    private News mNews;
+    private HighScore mHighScore;
 
     private static final String TAG = "MainActivity";
 
@@ -38,18 +44,63 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Prófa að sækja gögn frá bakenda
+        String accountInfo = "admin";
+
         NetworkManager networkManager = NetworkManager.getInstance(this);
-        networkManager.getRecipes(new iNetworkCallback<Chat>() {
+
+        // getChat
+        networkManager.getChat(accountInfo, new iNetworkCallback<Chat>() {
             @Override
             public void onSuccess(Chat result) {
-                mTest = result;
-                Log.d(TAG, "First recipe in list: " + mTest.getChat());
+                mChat = result;
+                Log.d(TAG, "Get chat list: " + mChat.getChat());
             }
 
             @Override
             public void onFailure(String errorString) {
-                Log.e(TAG, "Failed to get Recipes: " + errorString);
+                Log.e(TAG, "Failed to get Chat: " + errorString);
+            }
+        });
+
+        // getAccount
+        String loginInfo = "username=admin&password=password";
+        networkManager.getAccount(loginInfo, new iNetworkCallback<Account>() {
+            @Override
+            public void onSuccess(Account result) {
+                mAccount = result;
+                Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+
+        // getNews
+        networkManager.getNews(new iNetworkCallback<News>() {
+            @Override
+            public void onSuccess(News result) {
+                mNews = result;
+                Log.d(TAG, "Get news : " + mNews.getNews());
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get news: " + errorString);
+            }
+        });
+
+        networkManager.getHighScore(new iNetworkCallback<HighScore>() {
+            @Override
+            public void onSuccess(HighScore result) {
+                mHighScore = result;
+                Log.d(TAG, "Get HighScore : " + mHighScore.getHighscores());
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get highscore: " + errorString);
             }
         });
 
