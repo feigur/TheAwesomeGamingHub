@@ -163,7 +163,8 @@ public class NetworkManager {
             @Override
             public void onResponse(String response) {
                 Gson gson = new Gson();
-                List<Account> accounts = gson.fromJson(response,List<Account>.class);
+                Type listType = new TypeToken<List<Account>>(){}.getType();
+                List<Account> accounts = gson.fromJson(response,listType);
                 callback.onSuccess(accounts);
             }
         }, new Response.ErrorListener() {
