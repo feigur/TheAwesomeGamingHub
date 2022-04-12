@@ -53,6 +53,12 @@ public class HomeFragment extends Fragment {
         else{
             ((MainActivity)getActivity()).disableAdmin();
         }
+        if(user.getMuted()){
+            ((MainActivity)getActivity()).disableChat();
+        }
+        else{
+            ((MainActivity)getActivity()).enableChat();
+        }
         final TextView userTextView = getActivity().findViewById(R.id.textView);
         userTextView.setText(user.getUsername());
 

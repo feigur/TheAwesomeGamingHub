@@ -144,6 +144,20 @@ public class MainActivity extends AppCompatActivity {
         item.setEnabled(false);
     }
 
+    public void enableChat(){
+        Menu menu = binding.navView.getMenu();
+        MenuItem item = menu.getItem(1);
+        item.setVisible(true);
+        item.setEnabled(true);
+    }
+
+    public void disableChat(){
+        Menu menu = binding.navView.getMenu();
+        MenuItem item = menu.getItem(1);
+        item.setVisible(false);
+        item.setEnabled(false);
+    }
+
     public Account login(String username, String password){
         NetworkManager networkManager = NetworkManager.getInstance(this);
         // getAccount
