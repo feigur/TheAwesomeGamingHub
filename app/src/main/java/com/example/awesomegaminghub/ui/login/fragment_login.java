@@ -161,7 +161,7 @@ public class fragment_login extends Fragment {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                Account loggedInAccount = ((MainActivity)getActivity()).login(usernameEditText.getText().toString(),
+                Account loggedInAccount = ((MainActivity)getActivity()).create(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
                 if(loggedInAccount != null){
                     Gson gson = new Gson();
