@@ -158,4 +158,22 @@ public class MainActivity extends AppCompatActivity {
         item.setVisible(false);
         item.setEnabled(false);
     }
+
+    public void login(String username, String password){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        // getAccount
+        String loginInfo = "username=" + username + "&password=" + password;
+        networkManager.getAccount(loginInfo, new iNetworkCallback<Account>() {
+            @Override
+            public void onSuccess(Account result) {
+                mAccount = result;
+                Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+    }
 }
