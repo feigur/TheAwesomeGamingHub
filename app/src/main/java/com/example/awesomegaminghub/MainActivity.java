@@ -205,6 +205,97 @@ public class MainActivity extends AppCompatActivity {
         return mAccount;
     }
 
+    public Account setAdmin(String username){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        String loginInfo = "username=" + username;
+        networkManager.setAdmin(loginInfo, new iNetworkCallback<Account>() {
+            @Override
+            public void onSuccess(Account result) {
+                mAccount = result;
+                if(mAccount != null){
+                    Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+                }
+
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                mAccount = null;
+                Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+        return mAccount;
+    }
+
+    public Account setNotAdmin(String username){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        String loginInfo = "username=" + username;
+        networkManager.setNotAdmin(loginInfo, new iNetworkCallback<Account>() {
+            @Override
+            public void onSuccess(Account result) {
+                mAccount = result;
+                if(mAccount != null){
+                    Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+                }
+
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                mAccount = null;
+                Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+        return mAccount;
+    }
+
+    public Account setMuted(String admin, String username){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        String loginInfo = "username=" + admin + "&mute=" + username;
+        networkManager.setMuted(loginInfo, new iNetworkCallback<Account>() {
+            @Override
+            public void onSuccess(Account result) {
+                mAccount = result;
+                if(mAccount != null){
+                    Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+                }
+
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                mAccount = null;
+                Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+        return mAccount;
+    }
+
+    public Account setUnMuted(String admin, String username){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        String loginInfo = "username=" + admin + "&mute=" + username;
+        networkManager.setUnMuted(loginInfo, new iNetworkCallback<Account>() {
+            @Override
+            public void onSuccess(Account result) {
+                mAccount = result;
+                if(mAccount != null){
+                    Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+                }
+
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                mAccount = null;
+                Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+        return mAccount;
+    }
+
+
+
+
     public List<Account> getAccounts(){
         NetworkManager networkManager = NetworkManager.getInstance(this);
         networkManager.getAccounts(new iNetworkCallback<List<Account>>() {
