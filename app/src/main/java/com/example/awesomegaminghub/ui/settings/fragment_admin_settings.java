@@ -63,7 +63,7 @@ public class fragment_admin_settings extends Fragment {
         String buff;
         Account acc;
         for (int i = 0; i < usersList.size();i++){
-            acc = usersList[i];
+            acc = usersList.get(i);
             buff = acc.getUsername();
         }
     }
