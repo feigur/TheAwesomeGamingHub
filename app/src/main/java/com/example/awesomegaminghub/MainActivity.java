@@ -166,4 +166,31 @@ public class MainActivity extends AppCompatActivity {
         });
         return mAccount;
     }
+
+    public Account create(String username, String password){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        // getAccount
+        String loginInfo = "username=" + username + "&password=" + password;
+        networkManager.createAccount(loginInfo, new iNetworkCallback<Account>() {
+            @Override
+            public void onSuccess(Account result) {
+                mAccount = result;
+                if(mAccount != null){
+                    Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+                }
+
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                mAccount = null;
+                Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+        return mAccount;
+    }
+
+    public void resetAccount(){
+        mAccount = null;
+    }
 }

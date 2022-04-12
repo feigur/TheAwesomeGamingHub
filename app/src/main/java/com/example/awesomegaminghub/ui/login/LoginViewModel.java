@@ -82,4 +82,8 @@ public class LoginViewModel extends ViewModel {
     public void loginFailed(){
         this.mText.setValue("Login failed");
     }
+
+    public void welcomeMsg(){
+        this.mText.setValue("Welcome");
+    }
 }

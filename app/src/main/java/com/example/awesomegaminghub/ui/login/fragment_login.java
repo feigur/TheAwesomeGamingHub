@@ -46,6 +46,7 @@ public class fragment_login extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity)getActivity()).resetAccount();
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
         binding = FragmentLoginBinding.inflate(inflater, container, false);
@@ -55,6 +56,7 @@ public class fragment_login extends Fragment {
         context = getActivity();
         sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+        loginViewModel.welcomeMsg();
 
         return root;
 
@@ -159,14 +161,18 @@ public class fragment_login extends Fragment {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                LoggedInUser loggedInUser = loginViewModel.login(usernameEditText.getText().toString(),
+                Account loggedInAccount = ((MainActivity)getActivity()).login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
-                if(loggedInUser != null){
+                if(loggedInAccount != null){
                     Gson gson = new Gson();
-                    String json = gson.toJson(loggedInUser);
+                    String json = gson.toJson(loggedInAccount);
                     editor.putString("loggedUser",json);
                     editor.apply();
                     Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
+                }
+                else{
+                    loadingProgressBar.setVisibility(View.INVISIBLE);
+                    loginViewModel.loginFailed();
                 }
             }
         });
