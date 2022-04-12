@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Account mAccount;
     private News mNews;
     private HighScore mHighScore;
+    private List<Account> users;
 
     private static final String TAG = "MainActivity";
 
@@ -206,7 +207,22 @@ public class MainActivity extends AppCompatActivity {
 
     public List<Account> getAccounts(){
         NetworkManager networkManager = NetworkManager.getInstance(this);
-        String
+        networkManager.getAccounts(new iNetworkCallback<List<Account>>() {
+            @Override
+            public void onSuccess(List<Account> result) {
+                users = result;
+                if(users != null){
+                }
+
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                users = null;
+                Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+        return users;
     }
 
     public void resetAccount(){

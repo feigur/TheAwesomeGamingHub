@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.awesomegaminghub.MainActivity;
 import com.example.awesomegaminghub.databinding.FragmentAdminSettingsBinding;
 import com.example.awesomegaminghub.entities.Account;
 
@@ -22,7 +24,8 @@ import java.util.List;
 public class fragment_admin_settings extends Fragment {
 
     private FragmentAdminSettingsBinding binding;
-    private ScrollView usersView;
+    private ScrollView usersView = binding.userView;
+    private ListView usersListView;
     private List<Account> usersList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -32,7 +35,7 @@ public class fragment_admin_settings extends Fragment {
 
         binding = FragmentAdminSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        usersList = ((MainActivity)getActivity()).getAccounts();
 
         final TextView textView = binding.textChat;
         galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
@@ -45,7 +48,6 @@ public class fragment_admin_settings extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Button addNewsButton = binding.addNews;
         final Button promoteUserButton = binding.promoteUser;
         final Button muteUserButton = binding.muteUser;
         final Button deleteUserButton = binding.deleteUser;
