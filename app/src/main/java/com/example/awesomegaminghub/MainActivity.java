@@ -62,21 +62,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // getAccount
-        String loginInfo = "username=admin&password=password";
-        networkManager.getAccount(loginInfo, new iNetworkCallback<Account>() {
-            @Override
-            public void onSuccess(Account result) {
-                mAccount = result;
-                Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
-            }
-
-            @Override
-            public void onFailure(String errorString) {
-                Log.e(TAG, "Failed to get user: " + errorString);
-            }
-        });
-
         // getNews
         networkManager.getNews(new iNetworkCallback<News>() {
             @Override
@@ -167,7 +152,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Account result) {
                 mAccount = result;
-                Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+                if(mAccount != null){
+                    Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+                }
 
             }
 

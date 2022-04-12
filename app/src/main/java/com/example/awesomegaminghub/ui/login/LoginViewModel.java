@@ -78,4 +78,8 @@ public class LoginViewModel extends ViewModel {
     public LiveData<String>  getText(){
         return mText;
     }
+
+    public void loginFailed(){
+        this.mText.setValue("Login failed");
+    }
 }

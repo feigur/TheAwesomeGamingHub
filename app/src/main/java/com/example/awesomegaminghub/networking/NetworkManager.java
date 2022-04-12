@@ -54,8 +54,13 @@ public class NetworkManager {
             @Override
             public void onResponse(String response) {
                 Gson gson = new Gson();
-                Account account = gson.fromJson(response, Account.class);
-                callback.onSuccess(account);
+                if(response != null){
+                    Account account = gson.fromJson(response, Account.class);
+                    callback.onSuccess(account);
+                }
+                else{
+                    callback.onFailure("No account found");
+                }
             }
         }, new Response.ErrorListener() {
             @Override

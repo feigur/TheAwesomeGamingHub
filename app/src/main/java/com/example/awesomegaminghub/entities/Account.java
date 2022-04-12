@@ -13,7 +13,10 @@ public class Account {
 
 
     public Account() {
-
+        this.username = null;
+        this.password = null;
+        this.admin = false;
+        this.muted = false;
     }
 
     public Account(String username, String password){

@@ -148,6 +148,10 @@ public class fragment_login extends Fragment {
                     editor.apply();
                     Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
                 }
+                else{
+                    loadingProgressBar.setVisibility(View.INVISIBLE);
+                    loginViewModel.loginFailed();
+                }
             }
         });
 
