@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         item.setEnabled(false);
     }
 
-    public void login(String username, String password){
+    public Account login(String username, String password){
         NetworkManager networkManager = NetworkManager.getInstance(this);
         // getAccount
         String loginInfo = "username=" + username + "&password=" + password;
@@ -168,12 +168,15 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(Account result) {
                 mAccount = result;
                 Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+
             }
 
             @Override
             public void onFailure(String errorString) {
+                mAccount = null;
                 Log.e(TAG, "Failed to get user: " + errorString);
             }
         });
+        return mAccount;
     }
 }

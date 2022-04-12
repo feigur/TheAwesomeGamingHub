@@ -25,10 +25,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.awesomegaminghub.MainActivity;
 import com.example.awesomegaminghub.data.model.LoggedInUser;
 import com.example.awesomegaminghub.databinding.FragmentLoginBinding;
 
 import com.example.awesomegaminghub.R;
+import com.example.awesomegaminghub.entities.Account;
 import com.google.gson.Gson;
 
 public class fragment_login extends Fragment {
@@ -66,6 +68,7 @@ public class fragment_login extends Fragment {
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
+        final Button registerButton = binding.register;
         final ProgressBar loadingProgressBar = binding.loading;
 
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
@@ -75,6 +78,7 @@ public class fragment_login extends Fragment {
                     return;
                 }
                 loginButton.setEnabled(loginFormState.isDataValid());
+                registerButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
                     usernameEditText.setError(getString(loginFormState.getUsernameError()));
                 }
@@ -132,6 +136,22 @@ public class fragment_login extends Fragment {
         });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadingProgressBar.setVisibility(View.VISIBLE);
+                Account loggedInAccount = ((MainActivity)getActivity()).login(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString());
+                if(loggedInAccount != null){
+                    Gson gson = new Gson();
+                    String json = gson.toJson(loggedInAccount);
+                    editor.putString("loggedUser",json);
+                    editor.apply();
+                    Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
+                }
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);

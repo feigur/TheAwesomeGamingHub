@@ -66,6 +66,25 @@ public class NetworkManager {
         );
         mQueue.add(request);
     }
+    public void createAccount(String accInfo, final iNetworkCallback<Account> callback) {
+        String addToUrl = "account/create?" + accInfo;
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Account account = gson.fromJson(response, Account.class);
+                callback.onSuccess(account);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
 
     public void getChat(String accInfo, final iNetworkCallback<Chat> callback) {
         String addToUrl = "chat/saekja?username=" + accInfo;
