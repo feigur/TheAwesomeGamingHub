@@ -176,4 +176,110 @@ public class NetworkManager {
         );
         mQueue.add(request);
     }
+
+    public void setAdmin(String accInfo, final iNetworkCallback<Account> callback) {
+        String addToUrl = "account/setadmin?" + accInfo;
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                if(response != null){
+                    Account account = gson.fromJson(response, Account.class);
+                    callback.onSuccess(account);
+                }
+                else{
+                    callback.onFailure("No account found");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
+    public void setNotAdmin(String accInfo, final iNetworkCallback<Account> callback) {
+        String addToUrl = "account/setuadmin?" + accInfo;
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                if(response != null){
+                    Account account = gson.fromJson(response, Account.class);
+                    callback.onSuccess(account);
+                }
+                else{
+                    callback.onFailure("No account found");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
+    public void setMuted(String accInfo, final iNetworkCallback<Account> callback) {
+        String addToUrl = "account/setmuted?" + accInfo;
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                if(response != null){
+                    Account account = gson.fromJson(response, Account.class);
+                    callback.onSuccess(account);
+                }
+                else{
+                    callback.onFailure("No account found");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
+    public void setUnMuted(String accInfo, final iNetworkCallback<Account> callback) {
+        String addToUrl = "account/setunmuted?" + accInfo;
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                if(response != null){
+                    Account account = gson.fromJson(response, Account.class);
+                    callback.onSuccess(account);
+                }
+                else{
+                    callback.onFailure("No account found");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
+
+
+
+
+
 }
