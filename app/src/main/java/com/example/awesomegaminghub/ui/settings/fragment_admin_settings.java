@@ -35,8 +35,7 @@ public class fragment_admin_settings extends Fragment {
 
         binding = FragmentAdminSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        usersList = ((MainActivity)getActivity()).getAccounts();
-
+        usersList = this.updateUserList();
         final TextView textView = binding.textChat;
         galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
@@ -51,6 +50,22 @@ public class fragment_admin_settings extends Fragment {
         final Button promoteUserButton = binding.promoteUser;
         final Button muteUserButton = binding.muteUser;
         final Button deleteUserButton = binding.deleteUser;
+
+        this.populateListView();
+    }
+
+    public List<Account> updateUserList(){
+        return ((MainActivity)getActivity()).getAccounts();
+    }
+    //Todo------------------------------------
+    public void populateListView(){
+        View buffer;
+        String buff;
+        Account acc;
+        for (int i = 0; i < usersList.size();i++){
+            acc = usersList[i];
+            buff = acc.getUsername();
+        }
     }
 
     @Override
