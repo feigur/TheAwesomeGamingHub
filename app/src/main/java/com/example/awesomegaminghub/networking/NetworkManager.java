@@ -157,7 +157,7 @@ public class NetworkManager {
     }
 
     public void getAccounts(final iNetworkCallback<List<Account>> callback) {
-        String addToUrl = "account/deleteaccount";
+        String addToUrl = "account/findAll";
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
             @Override
