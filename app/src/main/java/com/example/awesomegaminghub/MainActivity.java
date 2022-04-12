@@ -204,6 +204,11 @@ public class MainActivity extends AppCompatActivity {
         return mAccount;
     }
 
+    public List<Account> getAccounts(){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        String
+    }
+
     public void resetAccount(){
         mAccount = null;
     }

@@ -155,4 +155,24 @@ public class NetworkManager {
         );
         mQueue.add(request);
     }
+
+    public void getAccounts(final iNetworkCallback<List<Account>> callback) {
+        String addToUrl = "account/deleteaccount";
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                List<Account> accounts = gson.fromJson(response,List<Account>.class);
+                callback.onSuccess(accounts);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
 }

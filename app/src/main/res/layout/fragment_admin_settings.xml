@@ -17,32 +17,22 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/addNews"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="127dp"
-        android:layout_marginEnd="121dp"
-        android:text="Add News"
-        app:layout_constraintBottom_toTopOf="@+id/muteUser"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.977" />
 
     <Button
         android:id="@+id/deleteUser"
         android:layout_width="170dp"
         android:layout_height="50dp"
         android:layout_marginStart="120dp"
-        android:layout_marginEnd="121dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="20dp"
         android:text="Delete User"
         app:layout_constraintBottom_toTopOf="@+id/text_chat"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/promoteUser" />
 
@@ -51,12 +41,13 @@
         android:layout_width="170dp"
         android:layout_height="50dp"
         android:layout_marginStart="120dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="121dp"
         android:text="Mute User"
         app:layout_constraintBottom_toTopOf="@+id/promoteUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addNews" />
+        app:layout_constraintTop_toBottomOf="@+id/userView" />
 
     <Button
         android:id="@+id/promoteUser"
@@ -69,5 +60,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/muteUser" />
+
+    <ScrollView
+        android:id="@+id/userView"
+        android:layout_width="409dp"
+        android:layout_height="450dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/muteUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
