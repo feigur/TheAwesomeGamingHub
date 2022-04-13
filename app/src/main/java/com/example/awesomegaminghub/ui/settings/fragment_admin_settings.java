@@ -73,11 +73,11 @@ public class fragment_admin_settings extends Fragment {
             @Override
             public void onClick(View view) {
                 Account user = usersList.get(selectedUser);
-                if(user.getMuted()){
-                    ((MainActivity)getActivity()).setNotAdmin(admin.getUsername(),user.getUsername());
+                if(user.getAdmin()){
+                    ((MainActivity)getActivity()).setNotAdmin(user.getUsername());
                 }
                 else{
-                    ((MainActivity)getActivity()).setAdmin(admin.getUsername(),user.getUsername());
+                    ((MainActivity)getActivity()).setAdmin(user.getUsername());
                 }
                 getData();
             }
