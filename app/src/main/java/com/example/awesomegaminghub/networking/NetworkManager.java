@@ -1,6 +1,7 @@
 package com.example.awesomegaminghub.networking;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,6 +26,8 @@ public class NetworkManager {
     private static NetworkManager mInstance;
     private static RequestQueue mQueue;
     private Context mContext;
+
+    private static final String TAG = "NetworkManager1";
 
     public static synchronized NetworkManager getInstance(Context context) {
         if(mInstance == null) {
@@ -163,6 +166,7 @@ public class NetworkManager {
             @Override
             public void onResponse(String response) {
                 Gson gson = new Gson();
+                Log.d(TAG,response);
                 Type listType = new TypeToken<List<Account>>(){}.getType();
                 List<Account> accounts = gson.fromJson(response,listType);
                 callback.onSuccess(accounts);

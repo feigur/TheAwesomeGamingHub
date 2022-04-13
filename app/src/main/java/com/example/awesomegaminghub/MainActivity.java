@@ -303,6 +303,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(List<Account> result) {
                 users = result;
                 if(users != null){
+                    Log.d(TAG,"Succsess");
                 }
 
             }
