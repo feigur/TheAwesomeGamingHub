@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/username"
-        android:name="com.example.awesomegaminghub.ui.login.fragment_login"
+        android:name="com.example.awesomegaminghub.ui.login.LoginFragment"
         android:label="@string/login_View"
         tools:layout="@layout/fragment_login" >
         <action

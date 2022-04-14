@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.awesomegaminghub.MainUnityActivity;
 import com.example.awesomegaminghub.R;
+import com.unity3d.player.UnityPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import java.util.Map;
 public class GamePageFragment extends Fragment {
 
     boolean isUnityLoaded = false;
+    String gameName = "";
 
     ActivityResultLauncher<Intent> gameActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -77,6 +79,8 @@ public class GamePageFragment extends Fragment {
         TextView chosenGame = view.findViewById(R.id.chosenGame);
         String newsId = getArguments().getString("gameName");
         chosenGame.setText("You are playing: " + newsId);
+        gameName = newsId;
+        //UnityPlayer.UnitySendMessage("SceneLoader", "LoadScene", newsId);
 
         return view;
     }
@@ -84,6 +88,7 @@ public class GamePageFragment extends Fragment {
     public void btnLoadUnity(View v) {
         isUnityLoaded = true;
         Intent intent = new Intent(getActivity(), MainUnityActivity.class);
+        intent.putExtra("Game Name", gameName);
         //Intent intent = new Intent(this, MainUnityActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         gameActivityResultLauncher.launch(intent);
