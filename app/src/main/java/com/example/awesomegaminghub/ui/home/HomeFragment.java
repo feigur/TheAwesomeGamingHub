@@ -21,6 +21,7 @@ import androidx.navigation.Navigation;
 import com.example.awesomegaminghub.MainActivity;
 import com.example.awesomegaminghub.data.model.LoggedInUser;
 import com.example.awesomegaminghub.databinding.FragmentHomeBinding;
+import com.example.awesomegaminghub.entities.Account;
 import com.google.gson.Gson;
 import com.example.awesomegaminghub.R;
 
@@ -29,7 +30,7 @@ import com.google.android.material.navigation.NavigationView;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private LoggedInUser user;
+    private Account user;
     private SharedPreferences sharedPref;
     private HomeViewModel homeViewModel;
 
@@ -44,7 +45,7 @@ public class HomeFragment extends Fragment {
         sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPref.getString("loggedUser", "");
-        user = gson.fromJson(json, LoggedInUser.class);
+        user = gson.fromJson(json, Account.class);
         if(user.getAdmin()){
             homeViewModel.setText("admin");
             ((MainActivity)getActivity()).setAdmin();
@@ -52,8 +53,14 @@ public class HomeFragment extends Fragment {
         else{
             ((MainActivity)getActivity()).disableAdmin();
         }
+        if(user.getMuted()){
+            ((MainActivity)getActivity()).disableChat();
+        }
+        else{
+            ((MainActivity)getActivity()).enableChat();
+        }
         final TextView userTextView = getActivity().findViewById(R.id.textView);
-        userTextView.setText(user.getDisplayName());
+        userTextView.setText(user.getUsername());
 
         //final TextView textView = binding.textHome;
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);

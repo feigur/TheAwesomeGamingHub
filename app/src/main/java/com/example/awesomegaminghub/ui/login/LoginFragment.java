@@ -25,10 +25,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.awesomegaminghub.MainActivity;
 import com.example.awesomegaminghub.data.model.LoggedInUser;
 import com.example.awesomegaminghub.databinding.FragmentLoginBinding;
 
 import com.example.awesomegaminghub.R;
+import com.example.awesomegaminghub.entities.Account;
 import com.google.gson.Gson;
 
 public class LoginFragment extends Fragment {
@@ -44,6 +46,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity)getActivity()).resetAccount();
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
         binding = FragmentLoginBinding.inflate(inflater, container, false);
@@ -53,6 +56,7 @@ public class LoginFragment extends Fragment {
         context = getActivity();
         sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+        loginViewModel.welcomeMsg();
 
         return root;
 
@@ -66,6 +70,7 @@ public class LoginFragment extends Fragment {
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
+        final Button registerButton = binding.register;
         final ProgressBar loadingProgressBar = binding.loading;
 
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
@@ -75,6 +80,7 @@ public class LoginFragment extends Fragment {
                     return;
                 }
                 loginButton.setEnabled(loginFormState.isDataValid());
+                registerButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
                     usernameEditText.setError(getString(loginFormState.getUsernameError()));
                 }
@@ -135,14 +141,38 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                LoggedInUser loggedInUser = loginViewModel.login(usernameEditText.getText().toString(),
+                Account loggedInAccount = ((MainActivity)getActivity()).login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
-                if(loggedInUser != null){
+                if(loggedInAccount != null){
                     Gson gson = new Gson();
-                    String json = gson.toJson(loggedInUser);
+                    String json = gson.toJson(loggedInAccount);
                     editor.putString("loggedUser",json);
                     editor.apply();
                     Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
+                }
+                else{
+                    loadingProgressBar.setVisibility(View.INVISIBLE);
+                    loginViewModel.loginFailed();
+                }
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadingProgressBar.setVisibility(View.VISIBLE);
+                Account loggedInAccount = ((MainActivity)getActivity()).create(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString());
+                if(loggedInAccount != null){
+                    Gson gson = new Gson();
+                    String json = gson.toJson(loggedInAccount);
+                    editor.putString("loggedUser",json);
+                    editor.apply();
+                    Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
+                }
+                else{
+                    loadingProgressBar.setVisibility(View.INVISIBLE);
+                    loginViewModel.loginFailed();
                 }
             }
         });
