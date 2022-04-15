@@ -69,6 +69,14 @@ public class fragment_admin_settings extends Fragment {
         final Button promoteUserButton = binding.promoteUser;
         final Button muteUserButton = binding.muteUser;
         final Button deleteUserButton = binding.deleteUser;
+        deleteUserButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Account user = usersList.get(selectedUser);
+                ((MainActivity)getActivity()).deleteAccount(admin.getUsername(),user.getUsername());
+                getData();
+            }
+        });
         promoteUserButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

@@ -281,5 +281,23 @@ public class NetworkManager {
         mQueue.add(request);
     }
 
+    public void DeleteUser(String accInfo, final iNetworkCallback<String> callback) {
+        String addToUrl = "account/deleteaccount?" + accInfo;
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
 
 }

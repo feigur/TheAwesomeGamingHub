@@ -317,6 +317,24 @@ public class MainActivity extends AppCompatActivity {
         return users;
     }
 
+    public void deleteAccount(String admin, String username){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        String deleteInfo = "admin=" + admin + "&account=" + username;
+        networkManager.DeleteUser(deleteInfo, new iNetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d(TAG,"Succsess");
+
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                users = null;
+                Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+    }
+
     public void resetAccount(){
         mAccount = null;
     }
