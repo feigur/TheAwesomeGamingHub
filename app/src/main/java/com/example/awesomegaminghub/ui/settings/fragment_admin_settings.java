@@ -39,10 +39,10 @@ public class fragment_admin_settings extends Fragment {
     private Runnable runnable;
     private SharedPreferences sharedPref;
     private Account admin;
+    private Integer count;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        getData();
         AdminSettingsViewModel galleryViewModel =
                 new ViewModelProvider(this).get(AdminSettingsViewModel.class);
 
@@ -57,7 +57,7 @@ public class fragment_admin_settings extends Fragment {
 
         final TextView textView = binding.textChat;
         galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
+        getData();
 
         return root;
     }
@@ -133,10 +133,12 @@ public class fragment_admin_settings extends Fragment {
     private void getData(){
         int delay = 100;
         usersList = null;
+        count = 0;
         handler.postDelayed( runnable = new Runnable() {
             public void run() {
                 usersList = updateUserList();
-                if(usersList == null){
+                if(count < 2){
+                    count = count + 1;
                     handler.postDelayed(runnable, delay);
                 }
                 else{
@@ -155,7 +157,6 @@ public class fragment_admin_settings extends Fragment {
     }
     //Todo------------------------------------
     public void populateListView(){
-        usersList = this.updateUserList();
         TextView textView;
         String buff;
         Account acc;

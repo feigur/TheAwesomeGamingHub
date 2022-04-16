@@ -119,6 +119,24 @@ public class NetworkManager {
         mQueue.add(request);
     }
 
+    public void sendChat(String accInfo, String msg, final iNetworkCallback<String> callback) {
+        String addToUrl = "chat/add?username=" + accInfo+"&msg="+msg;
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
     public void getNews(final iNetworkCallback<News> callback) {
         String addToUrl = "news/saekja";
         StringRequest request = new StringRequest(

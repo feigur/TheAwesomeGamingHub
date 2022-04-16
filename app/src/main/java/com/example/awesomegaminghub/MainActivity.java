@@ -51,19 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         NetworkManager networkManager = NetworkManager.getInstance(this);
 
-        // getChat
-        networkManager.getChat(accountInfo, new iNetworkCallback<Chat>() {
-            @Override
-            public void onSuccess(Chat result) {
-                mChat = result;
-                Log.d(TAG, "Get chat list: " + mChat.getChat());
-            }
 
-            @Override
-            public void onFailure(String errorString) {
-                Log.e(TAG, "Failed to get Chat: " + errorString);
-            }
-        });
 
         // getNews
         networkManager.getNews(new iNetworkCallback<News>() {
@@ -164,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
     public Account login(String username, String password){
         NetworkManager networkManager = NetworkManager.getInstance(this);
         // getAccount
+        Account returner;
         String loginInfo = "username=" + username + "&password=" + password;
         networkManager.getAccount(loginInfo, new iNetworkCallback<Account>() {
             @Override
@@ -181,7 +170,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "Failed to get user: " + errorString);
             }
         });
-        return mAccount;
+        returner = mAccount;
+        mAccount = null;
+        return returner;
     }
 
     public Account create(String username, String password){
@@ -300,6 +291,7 @@ public class MainActivity extends AppCompatActivity {
 
     public List<Account> getAccounts(){
         NetworkManager networkManager = NetworkManager.getInstance(this);
+        List<Account> returner;
         networkManager.getAccounts(new iNetworkCallback<List<Account>>() {
             @Override
             public void onSuccess(List<Account> result) {
@@ -316,7 +308,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "Failed to get user: " + errorString);
             }
         });
-        return users;
+        returner = users;
+        users = null;
+        return returner;
     }
 
     public void deleteAccount(String admin, String username){
@@ -333,6 +327,44 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(String errorString) {
                 users = null;
                 Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+    }
+
+    public Chat getChat(String username){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        String accountInfo = username;
+        Chat returner;
+        networkManager.getChat(accountInfo, new iNetworkCallback<Chat>() {
+            @Override
+            public void onSuccess(Chat result) {
+                mChat = result;
+                Log.d(TAG, "Get chat list: " + mChat.getChat());
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get Chat: " + errorString);
+            }
+        });
+        returner = mChat;
+        mChat = null;
+        return returner;
+    }
+
+    public void sendChat(String username,String msg){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        String accountInfo = username;
+        Chat returner;
+        networkManager.sendChat(accountInfo,msg, new iNetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d(TAG, "sent to chat:" + result);
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get Chat: " + errorString);
             }
         });
     }
