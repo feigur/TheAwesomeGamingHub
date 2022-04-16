@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -72,6 +73,17 @@ public class fragment_login extends Fragment {
         final Button loginButton = binding.login;
         final Button registerButton = binding.register;
         final ProgressBar loadingProgressBar = binding.loading;
+
+        passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focused) {
+                InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (focused)
+                    keyboard.showSoftInput(passwordEditText, 0);
+                else
+                    keyboard.hideSoftInputFromWindow(passwordEditText.getWindowToken(), 0);
+            }
+        });
 
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
