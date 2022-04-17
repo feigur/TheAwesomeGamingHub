@@ -45,8 +45,8 @@ public class Element : MonoBehaviour
         if(mine)
         {
             Playfield.uncoverMines();
-            //SceneManager.LoadScene("Minesweeper");
             gameb.stopTheClock();
+            gameb.WhatIsTheOutcome("LOSE!");
         } else
         {
             gameb.startTheClock();
@@ -59,6 +59,8 @@ public class Element : MonoBehaviour
             if (Playfield.isFinished())
             {
                 print("you win");
+                gameb.stopTheClock();
+                gameb.WhatIsTheOutcome("WIN!");
             }
         }
     }

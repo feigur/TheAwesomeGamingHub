@@ -12,15 +12,21 @@ public class playerController : MonoBehaviour
 
     bool ready;
     bool aiming = false;
+    public static bool pauseEverything = false;
 
     Vector2 startPos;
     Vector2 endPos;
+
+    private int exitRequests = 0;
+    public Transform quitScreen;
+    public Transform outcomeScreen;
 
 
     // Start is called before the first frame update
     void Start()
     {
         updateScore();
+        pauseEverything = false;
     }
 
     // Update is called once per frame
@@ -38,7 +44,7 @@ public class playerController : MonoBehaviour
             aiming = true;
         }
 
-        if (aiming) {
+        if (aiming && !pauseEverything) {
             startPos = this.transform.position;
             Vector3 shootPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             shootPos.z = 0;
@@ -46,7 +52,7 @@ public class playerController : MonoBehaviour
             endPos = shootPos;
         }
 
-        if (Input.GetMouseButtonUp(0) == true && aiming && ready) {
+        if (Input.GetMouseButtonUp(0) == true && aiming && ready && !pauseEverything) {
             endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Shoot();
         }
@@ -58,6 +64,27 @@ public class playerController : MonoBehaviour
             Vector2 direction = startPos - endPos;
             this.GetComponent<Rigidbody2D>().AddForce(direction * speed);
         }
+
+        //To Exit game
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            exitRequests++;
+            StartCoroutine(ClickTime());
+
+            if (exitRequests > 1)
+            {
+                quitScreen.GetChild(0).gameObject.SetActive(true);
+                quitScreen.GetChild(1).gameObject.SetActive(true);
+                pauseEverything = true;
+                // UnityEditor.EditorApplication.isPlaying = false;
+                //Application.Quit();
+            }
+        }
+    }
+
+    IEnumerator ClickTime ()
+    {
+        yield return new WaitForSeconds(2.0f);
+        exitRequests = 0;
     }
 
     void updateScore() {
@@ -72,8 +99,15 @@ public class playerController : MonoBehaviour
         }
 
         if (obj.transform.tag == "lava") {
-            //obj.transform.GetComponent<lavaController>().enabled = false;
-            SceneManager.LoadScene("CoolCharactervsLava");
+            obj.transform.GetComponent<lavaController>().enabled = false;
+            //SceneManager.LoadScene("CoolCharactervsLava");
+            outcomeScreen.GetChild(0).gameObject.SetActive(true);
+            outcomeScreen.GetChild(1).gameObject.SetActive(true);
+            pauseEverything = true;
         }
+    }
+
+    public void LetHimMoveAgain() {
+        pauseEverything = false;
     }
 }
