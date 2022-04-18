@@ -4,44 +4,73 @@ import java.util.ArrayList;
 
 public class HighScore {
 
-    private long ID;
+    private Integer ID;
     private int lengthOfScore = 10;
 
-    private  String username;
+    private  String gamename;
 
-    private ArrayList<String> highscores;
+    private ArrayList<String> usernamesHighscores;
+    private ArrayList<Integer> scoresHighscores;
 
     public HighScore(){
-        this.highscores= new ArrayList<String>(5);
+
+    }
+
+    public HighScore(Integer gameId, String gamename){
+        this.ID = gameId;
+        this.gamename = gamename;
+        this.usernamesHighscores = new ArrayList<String>(lengthOfScore);
+        this.scoresHighscores = new ArrayList<Integer>(lengthOfScore);
         for (int i = 0; i < lengthOfScore; i++) {
-            highscores.add("N/A");
+            usernamesHighscores.add("N/A");
+            scoresHighscores.add(0);
         }
     }
 
-    public  HighScore(ArrayList<String> highscores){this.highscores = highscores;}
-
-    public  ArrayList<String> addHighSchore(String msg){
-        for(int i = lengthOfScore-1; i>0; i--){
-            String temp = highscores.get(i-1);
-            this.highscores.set(i,temp);
-        }
-        this.highscores.set(0,msg);
-        return highscores;
+    public  HighScore(ArrayList<String> usernamesHighscores, ArrayList<Integer> scoresHighscores){
+        this.usernamesHighscores = usernamesHighscores;
+        this.scoresHighscores = scoresHighscores;
     }
 
-    public  ArrayList<String> getHighscores() { return highscores;}
+    public  void addHighSchore(String username, Integer score){
+        boolean found = false;
+        Integer tempScore = 0;
+        Integer tempScore2;
+        String tempUsername = "N/A";
+        String tempUsername2;
+        for(int i = 0; i<lengthOfScore; i++){
+            if(found){
+                tempScore2 = scoresHighscores.get(i);
+                tempUsername2 = usernamesHighscores.get(i);
+                scoresHighscores.set(i,tempScore);
+                usernamesHighscores.set(i,tempUsername);
+                tempScore = tempScore2;
+                tempUsername = tempUsername2;
+            }
+            else if(score > scoresHighscores.get(i)){
+                tempScore = scoresHighscores.get(i);
+                tempUsername = usernamesHighscores.get(i);
+                scoresHighscores.set(i,score);
+                usernamesHighscores.set(i,username);
+                found = true;
+            }
+        }
+    }
+
+    public ArrayList<Integer> getScoresHighscores() { return scoresHighscores;}
+    public ArrayList<String> getUsernamesHighscores(){ return usernamesHighscores;}
 
     public long getID() {
         return ID;
     }
-    public void setID(long ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
     public String getUsername() {
-        return username;
+        return gamename;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setGamename(String gamename) {
+        this.gamename = gamename;
     }
 }
