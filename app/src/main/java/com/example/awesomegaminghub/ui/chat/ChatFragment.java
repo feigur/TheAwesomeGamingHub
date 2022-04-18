@@ -138,6 +138,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        handler.removeCallbacks(runnable);
         binding = null;
     }
 }
