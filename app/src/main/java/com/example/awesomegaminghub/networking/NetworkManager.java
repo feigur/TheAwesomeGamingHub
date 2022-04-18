@@ -158,7 +158,7 @@ public class NetworkManager {
     }
 
     public void getHighScore(final iNetworkCallback<HighScore> callback) {
-        String addToUrl = "highscore/saekja";
+        String addToUrl = "highscore/saekja?gameId=1";
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
             @Override
