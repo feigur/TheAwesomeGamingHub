@@ -54,31 +54,31 @@ public class MainActivity extends AppCompatActivity {
 
 
         // getNews
-        networkManager.getNews(new iNetworkCallback<News>() {
-            @Override
-            public void onSuccess(News result) {
-                mNews = result;
-                Log.d(TAG, "Get news : " + mNews.getNews());
-            }
+        //networkManager.getNews(new iNetworkCallback<News>() {
+        //    @Override
+        //    public void onSuccess(News result) {
+        //        mNews = result;
+        //        Log.d(TAG, "Get news : " + mNews.getNews());
+        //    }
 
-            @Override
-            public void onFailure(String errorString) {
-                Log.e(TAG, "Failed to get news: " + errorString);
-            }
-        });
+        //    @Override
+        //    public void onFailure(String errorString) {
+        //        Log.e(TAG, "Failed to get news: " + errorString);
+        //    }
+        //});
 
-        networkManager.getHighScore(new iNetworkCallback<HighScore>() {
-            @Override
-            public void onSuccess(HighScore result) {
-                mHighScore = result;
-                Log.d(TAG, "Get HighScore : " + mHighScore.getHighscores());
-            }
-
-            @Override
-            public void onFailure(String errorString) {
-                Log.e(TAG, "Failed to get highscore: " + errorString);
-            }
-        });
+        //networkManager.getHighScore(new iNetworkCallback<HighScore>() {
+        //    @Override
+        //    public void onSuccess(HighScore result) {
+        //        mHighScore = result;
+        //        Log.d(TAG, "Get HighScore : " + mHighScore.getHighscores());
+        //    }
+        //
+        //    @Override
+        //    public void onFailure(String errorString) {
+        //        Log.e(TAG, "Failed to get highscore: " + errorString);
+        //    }
+        //});
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

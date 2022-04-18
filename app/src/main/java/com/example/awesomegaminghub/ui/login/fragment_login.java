@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -42,6 +43,18 @@ public class fragment_login extends Fragment {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
 
+    private EditText usernameEditText;
+    private EditText passwordEditText;
+    private Button loginButton;
+    private Button registerButton;
+    private ProgressBar loadingProgressBar;
+    private Account loggedInAccount;
+    private int count;
+
+    private Handler handler = new Handler();
+    private Runnable runnable;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -68,11 +81,11 @@ public class fragment_login extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        final EditText usernameEditText = binding.username;
-        final EditText passwordEditText = binding.password;
-        final Button loginButton = binding.login;
-        final Button registerButton = binding.register;
-        final ProgressBar loadingProgressBar = binding.loading;
+        usernameEditText = binding.username;
+        passwordEditText = binding.password;
+        loginButton = binding.login;
+        registerButton = binding.register;
+        loadingProgressBar = binding.loading;
 
         passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -153,7 +166,8 @@ public class fragment_login extends Fragment {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                Account loggedInAccount = ((MainActivity)getActivity()).login(usernameEditText.getText().toString(),
+                getDataLogin(view);
+                /*Account loggedInAccount = ((MainActivity)getActivity()).login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
                 if(loggedInAccount != null){
                     Gson gson = new Gson();
@@ -165,7 +179,7 @@ public class fragment_login extends Fragment {
                 else{
                     loadingProgressBar.setVisibility(View.INVISIBLE);
                     loginViewModel.loginFailed();
-                }
+                }*/
             }
         });
 
@@ -173,21 +187,82 @@ public class fragment_login extends Fragment {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                Account loggedInAccount = ((MainActivity)getActivity()).create(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-                if(loggedInAccount != null){
+                getDataCreate(view);
+                //Account loggedInAccount = ((MainActivity)getActivity()).create(usernameEditText.getText().toString(),
+                //        passwordEditText.getText().toString());
+                //if(loggedInAccount != null){
+                //    Gson gson = new Gson();
+                //    String json = gson.toJson(loggedInAccount);
+                //    editor.putString("loggedUser",json);
+                //    editor.apply();
+                //    Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
+                //}
+                //else{
+                //    loadingProgressBar.setVisibility(View.INVISIBLE);
+                //    loginViewModel.loginFailed();
+                //}
+            }
+        });
+    }
+
+    private void getDataLogin(View view){
+        int delay = 100;
+
+        count = 0;
+        handler.postDelayed( runnable = new Runnable() {
+            public void run() {
+                loggedInAccount = ((MainActivity)getActivity()).login(usernameEditText.getText().toString(),
+                                passwordEditText.getText().toString());
+                if(count < 3){
+                    count = count + 1;
+                    handler.postDelayed(runnable, delay);
+                }
+                else if(loggedInAccount == null){
+                    loadingProgressBar.setVisibility(View.INVISIBLE);
+                    loginViewModel.loginFailed();
+                }
+                else{
                     Gson gson = new Gson();
                     String json = gson.toJson(loggedInAccount);
                     editor.putString("loggedUser",json);
                     editor.apply();
                     Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
                 }
-                else{
+
+            }
+        }, delay);
+
+        super.onResume();
+    }
+
+    private void getDataCreate(View view){
+        int delay = 100;
+
+        count = 0;
+        handler.postDelayed( runnable = new Runnable() {
+            public void run() {
+                Account loggedInAccount = ((MainActivity)getActivity()).create(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString());
+                if(count < 3){
+                    count = count + 1;
+                    handler.postDelayed(runnable, delay);
+                }
+                else if(loggedInAccount == null){
                     loadingProgressBar.setVisibility(View.INVISIBLE);
                     loginViewModel.loginFailed();
                 }
+                else{
+                    Gson gson = new Gson();
+                    String json = gson.toJson(loggedInAccount);
+                    editor.putString("loggedUser",json);
+                    editor.apply();
+                    Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
+                }
+
             }
-        });
+        }, delay);
+
+        super.onResume();
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
@@ -221,6 +296,7 @@ public class fragment_login extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        handler.removeCallbacks(runnable);
         binding = null;
     }
 }
