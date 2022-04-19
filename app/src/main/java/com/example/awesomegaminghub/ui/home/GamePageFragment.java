@@ -67,10 +67,10 @@ public class GamePageFragment extends Fragment {
         if(gameName.equals("ordle")){
             gameId = "1";
         }
-        else if(gameName.equals("")){
+        else if(gameName.equals("minesweeper")){
             gameId = "2";
         }
-        else if(gameName.equals("")){
+        else if(gameName.equals("lavahazard")){
             gameId = "3";
         }
         else if(gameName.equals("")){
