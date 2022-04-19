@@ -155,7 +155,7 @@ public class fragment_admin_settings extends Fragment {
     public List<Account> updateUserList(){
         return ((MainActivity)getActivity()).getAccounts();
     }
-    //Todo------------------------------------
+
     public void populateListView(){
         TextView textView;
         String buff;

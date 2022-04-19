@@ -7,7 +7,7 @@ public class HighScore {
     private Integer ID;
     private int lengthOfScore = 10;
 
-    private  String gamename;
+    private  String GameName;
 
     private ArrayList<String> usernamesHighscores;
     private ArrayList<Integer> scoresHighscores;
@@ -18,7 +18,7 @@ public class HighScore {
 
     public HighScore(Integer gameId, String gamename){
         this.ID = gameId;
-        this.gamename = gamename;
+        this.GameName = gamename;
         this.usernamesHighscores = new ArrayList<String>(lengthOfScore);
         this.scoresHighscores = new ArrayList<Integer>(lengthOfScore);
         for (int i = 0; i < lengthOfScore; i++) {
@@ -67,10 +67,10 @@ public class HighScore {
         this.ID = ID;
     }
 
-    public String getUsername() {
-        return gamename;
+    public String getGameName() {
+        return GameName;
     }
     public void setGamename(String gamename) {
-        this.gamename = gamename;
+        this.GameName = gamename;
     }
 }

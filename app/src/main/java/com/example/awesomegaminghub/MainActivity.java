@@ -16,9 +16,6 @@ import com.example.awesomegaminghub.networking.iNetworkCallback;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -350,6 +347,41 @@ public class MainActivity extends AppCompatActivity {
         returner = mChat;
         mChat = null;
         return returner;
+    }
+
+    public HighScore getHighScore(String gameId){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        HighScore returner;
+        networkManager.getHighScore(gameId, new iNetworkCallback<HighScore>() {
+            @Override
+            public void onSuccess(HighScore result) {
+                mHighScore = result;
+                Log.d(TAG, "Get chat list: " + mHighScore.getGameName());
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get Chat: " + errorString);
+            }
+        });
+        returner = mHighScore;
+        mHighScore = null;
+        return returner;
+    }
+
+    public void addHighScore(String username, String score, String gameId){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        networkManager.addHighScore(username,score,gameId, new iNetworkCallback<HighScore>() {
+            @Override
+            public void onSuccess(HighScore result) {
+                Log.d(TAG, "score added");
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get Chat: " + errorString);
+            }
+        });
     }
 
     public void sendChat(String username,String msg){

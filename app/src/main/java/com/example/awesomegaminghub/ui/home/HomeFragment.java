@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        String[] gameArray = {"game1","game2"};
+        String[] gameArray = {"ordle","game2"};
 
         ListView listView = (ListView) view.findViewById(R.id.gamePage);
 

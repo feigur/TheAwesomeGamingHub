@@ -12,37 +12,60 @@
         android:layout_width="221dp"
         android:layout_height="68dp"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="456dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="98dp"
-        android:layout_marginBottom="207dp"
+        android:layout_marginBottom="10dp"
         android:text="Play Game!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/chosenGame"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/highscoreList" />
 
     <ListView
         android:id="@+id/highscoreList"
-        android:layout_width="229dp"
-        android:layout_height="183dp"
+        android:layout_width="326dp"
+        android:layout_height="378dp"
         android:layout_marginStart="93dp"
-        android:layout_marginTop="107dp"
         android:layout_marginEnd="89dp"
+        android:layout_marginBottom="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/playGameButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/chosenGame"
         android:layout_width="172dp"
         android:layout_height="42dp"
         android:layout_marginStart="117dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="122dp"
+        android:layout_marginBottom="36dp"
         android:text="Empty Text"
         android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playGameButton" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="155dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginBottom="13dp"
+        android:text="Highscores"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/highscoreList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -157,8 +157,28 @@ public class NetworkManager {
         mQueue.add(request);
     }
 
-    public void getHighScore(final iNetworkCallback<HighScore> callback) {
-        String addToUrl = "highscore/saekja?gameId=1";
+    public void getHighScore(String gameId, final iNetworkCallback<HighScore> callback) {
+        String addToUrl = "highscore/saekja?gameId="+gameId;
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                HighScore highScore = gson.fromJson(response, HighScore.class);
+                callback.onSuccess(highScore);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
+    public void addHighScore(String username, String score, String gameId, final iNetworkCallback<HighScore> callback) {
+        String addToUrl = "highscore/saekja?username="+username+"&score="+score+"&gameId="+gameId;
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
             @Override

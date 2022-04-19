@@ -4,15 +4,24 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.example.awesomegaminghub.MainActivity;
 import com.example.awesomegaminghub.R;
+import com.example.awesomegaminghub.databinding.FragmentGamePageBinding;
+import com.example.awesomegaminghub.databinding.FragmentLoginBinding;
+import com.example.awesomegaminghub.entities.Account;
+import com.example.awesomegaminghub.entities.HighScore;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,38 +30,83 @@ import java.util.Map;
 
 public class GamePageFragment extends Fragment {
 
+    private FragmentGamePageBinding binding;
+    private ArrayAdapter<String> highscoreAdapter;
+    private ListView listView;
+    private Button gameButton;
+    private TextView chosenGame;
+    private String gameName;
+    private String gameId = "";
+
+    private HighScore highScore;
+    private int count;
+
+    private Handler handler = new Handler();
+    private Runnable runnable;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_game_page, container, false);
+        binding = FragmentGamePageBinding.inflate(inflater, container, false);
+        highscoreAdapter = new ArrayAdapter<String>(((MainActivity)getActivity()), android.R.layout.simple_list_item_1);
 
-        String[] userName = {"MasterGamer667","SuperMarioFortniteSkin","GODGAMERTHEGAMERGOD","[Username Censored]","Nonni"};
-        String[] highscores = {"60000000000001","4186791912","10110110","1488","21"};
+        listView = binding.highscoreList;
+        listView.setAdapter(highscoreAdapter);
 
-        //This might not be needed when server is working
-        List<Map<String, String>> highscore = new ArrayList<>();
-        for(int i=0; i< userName.length; i++) {
-            Map<String, String> highscoredata = new HashMap<>(2);
-            highscoredata.put("Line1", userName[i]);
-            highscoredata.put("Line2", highscores[i]);
-            highscore.add(highscoredata);
+        gameButton = binding.playGameButton;
+        chosenGame = binding.chosenGame;
+        gameName = getArguments().getString("gameName");
+        chosenGame.setText("You are playing: " + gameName);
+        View root = binding.getRoot();
+        getData();
+        return root;
+    }
+
+    private HighScore getHighScore(){
+        if(gameName.equals("ordle")){
+            gameId = "1";
         }
+        return ((MainActivity)getActivity()).getHighScore(gameId);
+    }
 
-        SimpleAdapter hsAdapter = new SimpleAdapter(getActivity(), highscore,
-                android.R.layout.simple_list_item_2,
-                new String[] {"Line1","Line2" },
-                new int[] {android.R.id.text1,android.R.id.text2 }
-        );
+    private void getData(){
+        int delay = 100;
+        highScore = null;
+        count = 0;
+        handler.postDelayed( runnable = new Runnable() {
+            public void run() {
+                highScore = getHighScore();
+                if(count < 2){
+                    count = count + 1;
+                    handler.postDelayed(runnable, delay);
+                }
+                else{
+                    populateListView();
+                    handler.removeCallbacks(runnable);
+                }
 
-        ListView listView = view.findViewById(R.id.highscoreList);
-        listView.setAdapter(hsAdapter);
+            }
+        }, delay);
 
-        Button gameButton = view.findViewById(R.id.playGameButton);
-        TextView chosenGame = view.findViewById(R.id.chosenGame);
-        String newsId = getArguments().getString("gameName");
-        chosenGame.setText("You are playing: " + newsId);
+        super.onResume();
+    }
 
-        return view;
+    public void populateListView(){
+        String buff;
+        ArrayList<String> usernamesHighscore = highScore.getUsernamesHighscores();
+        ArrayList<Integer> scoresHighscore = highScore.getScoresHighscores();
+        highscoreAdapter.clear();
+        for (int i = 0; i < usernamesHighscore.size();i++){
+            buff = usernamesHighscore.get(i) + ": " + scoresHighscore.get(i).toString();
+            highscoreAdapter.add(buff);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler.removeCallbacks(runnable);
+        binding = null;
     }
 }
