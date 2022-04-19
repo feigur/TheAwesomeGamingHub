@@ -67,6 +67,15 @@ public class GamePageFragment extends Fragment {
         if(gameName.equals("ordle")){
             gameId = "1";
         }
+        else if(gameName.equals("")){
+            gameId = "2";
+        }
+        else if(gameName.equals("")){
+            gameId = "3";
+        }
+        else if(gameName.equals("")){
+            gameId = "4";
+        }
         return ((MainActivity)getActivity()).getHighScore(gameId);
     }
 

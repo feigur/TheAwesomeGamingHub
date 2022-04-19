@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        String accountInfo = "admin";
-
         NetworkManager networkManager = NetworkManager.getInstance(this);
 
 
@@ -158,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         mAccount = null;
         return returner;
     }
-
+    private Account returner;
     public Account create(String username, String password){
         NetworkManager networkManager = NetworkManager.getInstance(this);
         // getAccount
@@ -179,7 +177,14 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "Failed to get user: " + errorString);
             }
         });
+        if(mAccount != null){
+            returner = mAccount;
+        }
         return mAccount;
+    }
+
+    public Account getCreated(){
+        return returner;
     }
 
     public Account setAdmin(String username){

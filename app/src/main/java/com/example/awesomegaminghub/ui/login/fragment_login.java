@@ -243,8 +243,9 @@ public class fragment_login extends Fragment {
             public void run() {
                 Account loggedInAccount = ((MainActivity)getActivity()).create(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                loggedInAccount = ((MainActivity)getActivity()).getCreated();
                 if(count < 3){
-                    count = count + 1;
+                    count = count + 5;
                     handler.postDelayed(runnable, delay);
                 }
                 else if(loggedInAccount == null){
