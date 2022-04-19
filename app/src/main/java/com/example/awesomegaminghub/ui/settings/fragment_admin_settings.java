@@ -40,6 +40,9 @@ public class fragment_admin_settings extends Fragment {
     private SharedPreferences sharedPref;
     private Account admin;
     private Integer count;
+    private Button muteUserButton;
+    private Button deleteUserButton;
+    private Button promoteUserButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -66,9 +69,9 @@ public class fragment_admin_settings extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Button promoteUserButton = binding.promoteUser;
-        final Button muteUserButton = binding.muteUser;
-        final Button deleteUserButton = binding.deleteUser;
+        promoteUserButton = binding.promoteUser;
+        muteUserButton = binding.muteUser;
+        deleteUserButton = binding.deleteUser;
         deleteUserButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -112,22 +115,27 @@ public class fragment_admin_settings extends Fragment {
                 usersList = updateUserList();
                 Account user = usersList.get(selectedUser);
                 binding.textChat.setText(user.getUsername());
-                if(user.getMuted()){
-                    muteUserButton.setText("Unmute user");
-                }
-                else{
-                    muteUserButton.setText("Mute user");
-                }
-                if(user.getAdmin()){
-                    promoteUserButton.setText("Demote user");
-                }
-                else{
-                    promoteUserButton.setText("Promote user");
-                }
+                changeButtons(user);
+
             }
 
         });
 
+    }
+
+    private void changeButtons(Account user){
+        if(user.getMuted()){
+            muteUserButton.setText("Unmute user");
+        }
+        else{
+            muteUserButton.setText("Mute user");
+        }
+        if(user.getAdmin()){
+            promoteUserButton.setText("Demote user");
+        }
+        else{
+            promoteUserButton.setText("Promote user");
+        }
     }
 
     private void getData(){
@@ -179,6 +187,7 @@ public class fragment_admin_settings extends Fragment {
             }
             usersListView.add(buff);
         }
+        changeButtons(usersList.get(selectedUser));
     }
 
 
