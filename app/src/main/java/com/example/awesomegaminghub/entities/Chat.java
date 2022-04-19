@@ -13,7 +13,7 @@ public class Chat {
     private ArrayList<String> chat;
 
     public Chat(){
-        this.chat= new ArrayList<String>(5);
+        this.chat= new ArrayList<String>(lengthOfChat);
         for (int i = 0; i < lengthOfChat; i++) {
             chat.add("N/A");
         }
