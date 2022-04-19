@@ -122,7 +122,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void getDataContinous() {
-        int delay = 1000;
+        int delay = 3000;
         chatData = null;
         handler.postDelayed(runnable = new Runnable() {
             public void run() {
