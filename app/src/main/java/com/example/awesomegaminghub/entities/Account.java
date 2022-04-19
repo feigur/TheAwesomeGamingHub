@@ -10,13 +10,11 @@ public class Account {
     private String password;
     private boolean admin;
     private boolean muted;
+    private Integer photoID;
 
 
     public Account() {
-        this.username = null;
-        this.password = null;
-        this.admin = false;
-        this.muted = false;
+
     }
 
     public Account(String username, String password){
@@ -24,6 +22,7 @@ public class Account {
         this.password = password;
         this.admin = false;
         this.muted = false;
+        this.photoID = 0;
     }
 
 
@@ -66,5 +65,11 @@ public class Account {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setPhotoID(Integer photoID) { this.photoID = photoID;}
+
+    public Integer getPhotoID() { return photoID;}
+
+
 
 }
