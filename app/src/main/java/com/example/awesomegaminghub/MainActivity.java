@@ -64,19 +64,6 @@ public class MainActivity extends AppCompatActivity {
         //    }
         //});
 
-        //networkManager.getHighScore(new iNetworkCallback<HighScore>() {
-        //    @Override
-        //    public void onSuccess(HighScore result) {
-        //        mHighScore = result;
-        //        Log.d(TAG, "Get HighScore : " + mHighScore.getHighscores());
-        //    }
-        //
-        //    @Override
-        //    public void onFailure(String errorString) {
-        //        Log.e(TAG, "Failed to get highscore: " + errorString);
-        //    }
-        //});
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarMain.toolbar);
