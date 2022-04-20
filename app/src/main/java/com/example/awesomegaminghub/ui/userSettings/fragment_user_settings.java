@@ -54,6 +54,18 @@ public class fragment_user_settings extends Fragment {
         Gson gson = new Gson();
         String json = sharedPref.getString("loggedUser", "");
         user = gson.fromJson(json, Account.class);
+        if(user.getAdmin()){
+            ((MainActivity)getActivity()).setAdmin();
+        }
+        else{
+            ((MainActivity)getActivity()).disableAdmin();
+        }
+        if(user.getMuted()){
+            ((MainActivity)getActivity()).disableChat();
+        }
+        else{
+            ((MainActivity)getActivity()).enableChat();
+        }
 
         return binding.getRoot();
 

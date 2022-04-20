@@ -61,6 +61,18 @@ public class ChatFragment extends Fragment {
         String json = sharedPref.getString("loggedUser", "");
         chatUser = gson.fromJson(json, Account.class);
         getData();
+        if(chatUser.getAdmin()){
+            ((MainActivity)getActivity()).setAdmin();
+        }
+        else{
+            ((MainActivity)getActivity()).disableAdmin();
+        }
+        if(chatUser.getMuted()){
+            ((MainActivity)getActivity()).disableChat();
+        }
+        else{
+            ((MainActivity)getActivity()).enableChat();
+        }
 
         inputChat.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
