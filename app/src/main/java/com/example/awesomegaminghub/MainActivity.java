@@ -1,11 +1,15 @@
 package com.example.awesomegaminghub;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.example.awesomegaminghub.entities.Account;
 import com.example.awesomegaminghub.entities.Chat;
@@ -24,6 +28,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.awesomegaminghub.databinding.ActivityMainBinding;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -39,12 +44,18 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    private ImageView profileImg;
+    private NavigationView mNavigationView;
+
+    private SharedPreferences mSharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         NetworkManager networkManager = NetworkManager.getInstance(this);
+
 
 
 
@@ -63,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         //});
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        profileImg = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.Profile_image);
 
     }
 
@@ -99,6 +113,55 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void changeProfilePic(){
+        if(profileImg != null){
+            ifProfilePic();
+        }
+        else{
+            Log.d(TAG, "onCreate: FFS");
+        }
+    }
+
+    public void ifProfilePic(){
+        mSharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mSharedPreferences.getString("loggedUser", "");
+        Account user = gson.fromJson(json, Account.class);
+        Integer photoID = user.getPhotoID();
+        if(photoID == 0){
+            profileImg.setImageResource(R.drawable.pic_0);
+        }
+        else if(photoID == 1){
+            profileImg.setImageResource(R.drawable.pic_1);
+        }
+        else if(photoID == 2){
+            profileImg.setImageResource(R.drawable.pic_2);
+        }
+        else if(photoID == 3){
+            profileImg.setImageResource(R.drawable.pic_3);
+        }
+        else if(photoID == 4){
+            profileImg.setImageResource(R.drawable.pic_4);
+        }
+        else if(photoID == 5){
+            profileImg.setImageResource(R.drawable.pic_5);
+        }
+        else if(photoID == 6){
+            profileImg.setImageResource(R.drawable.pic_6);
+        }
+        else if(photoID == 7){
+            profileImg.setImageResource(R.drawable.pic_7);
+        }
+        else if(photoID == 8){
+            profileImg.setImageResource(R.drawable.pic_8);
+        }
+        else if(photoID == 9){
+            profileImg.setImageResource(R.drawable.pic_9);
+        }
+
+
     }
 
     public void setAdmin(){
@@ -262,6 +325,28 @@ public class MainActivity extends AppCompatActivity {
                 mAccount = result;
                 if(mAccount != null){
                     Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+                }
+
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                mAccount = null;
+                Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+        return mAccount;
+    }
+
+    public Account setPhotoID(String username,Integer photoID){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        String htmlinfo = "username=" + username + "&photoID=" + photoID.toString();
+        networkManager.setPhotoID(htmlinfo, new iNetworkCallback<Account>() {
+            @Override
+            public void onSuccess(Account result) {
+                mAccount = result;
+                if(mAccount != null){
+                    Log.d(TAG, "Get user photoID set");
                 }
 
             }

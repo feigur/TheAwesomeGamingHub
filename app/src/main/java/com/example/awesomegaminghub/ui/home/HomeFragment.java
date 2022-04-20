@@ -3,6 +3,7 @@ package com.example.awesomegaminghub.ui.home;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +33,12 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private Account user;
     private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
     private HomeViewModel homeViewModel;
+
+    private Handler handler = new Handler();
+    private Runnable runnable;
+    private int count;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +49,7 @@ public class HomeFragment extends Fragment {
         //View root = binding.getRoot();
 
         sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
         Gson gson = new Gson();
         String json = sharedPref.getString("loggedUser", "");
         user = gson.fromJson(json, Account.class);
@@ -59,9 +66,9 @@ public class HomeFragment extends Fragment {
         else{
             ((MainActivity)getActivity()).enableChat();
         }
+        changePhoto(2);
         final TextView userTextView = getActivity().findViewById(R.id.textView);
         userTextView.setText(user.getUsername());
-
         //final TextView textView = binding.textHome;
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
@@ -89,9 +96,36 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    private void changePhoto(Integer photoID){
+        int delay = 100;
+        count = 0;
+        String username = user.getUsername();
+        handler.postDelayed( runnable = new Runnable() {
+            public void run() {
+                user = ((MainActivity)getActivity()).setPhotoID(username,photoID);
+                if(count < 2){
+                    count = count + 1;
+                    handler.postDelayed(runnable, delay);
+                }
+                else{
+                    Gson gson = new Gson();
+                    String json = gson.toJson(user);
+                    editor.putString("loggedUser",json);
+                    editor.apply();
+                    ((MainActivity)getActivity()).changeProfilePic();
+                    handler.removeCallbacks(runnable);
+                }
+
+            }
+        }, delay);
+
+        super.onResume();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        handler.removeCallbacks(runnable);
         binding = null;
     }
 }

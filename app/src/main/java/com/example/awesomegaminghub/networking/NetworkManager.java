@@ -1,6 +1,7 @@
 package com.example.awesomegaminghub.networking;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -28,6 +29,8 @@ public class NetworkManager {
     private Context mContext;
 
     private static final String TAG = "NetworkManager1";
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
     public static synchronized NetworkManager getInstance(Context context) {
         if(mInstance == null) {
@@ -178,7 +181,7 @@ public class NetworkManager {
     }
 
     public void addHighScore(String username, String score, String gameId, final iNetworkCallback<HighScore> callback) {
-        String addToUrl = "highscore/saekja?username="+username+"&score="+score+"&gameId="+gameId;
+        String addToUrl = "highscore/add?username="+username+"&score="+score+"&gameId="+gameId;
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
             @Override
@@ -296,6 +299,31 @@ public class NetworkManager {
 
     public void setUnMuted(String accInfo, final iNetworkCallback<Account> callback) {
         String addToUrl = "account/setunmuted?" + accInfo;
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                if(response != null){
+                    Account account = gson.fromJson(response, Account.class);
+                    callback.onSuccess(account);
+                }
+                else{
+                    callback.onFailure("No account found");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
+    public void setPhotoID(String htmlinfo, final iNetworkCallback<Account> callback) {
+        String addToUrl = "account/photoID?" + htmlinfo;
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
             @Override
