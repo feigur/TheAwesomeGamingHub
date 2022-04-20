@@ -160,6 +160,27 @@ public class NetworkManager {
         mQueue.add(request);
     }
 
+    public void addNews(String username, String title, String story, final iNetworkCallback<String> callback) {
+        String stuff = "username=" + username + "&title=" + title + "&story=" + story;
+        String addToUrl = "news/add?" + stuff;
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + addToUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                News news = gson.fromJson(response, News.class);
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        mQueue.add(request);
+    }
+
     public void getHighScore(String gameId, final iNetworkCallback<HighScore> callback) {
         String addToUrl = "highscore/saekja?gameId="+gameId;
         StringRequest request = new StringRequest(
