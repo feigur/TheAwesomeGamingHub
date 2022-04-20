@@ -160,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
         else if(photoID == 9){
             profileImg.setImageResource(R.drawable.pic_9);
         }
+        profileImg.setMaxWidth(100);
+        profileImg.setMaxHeight(100);
 
 
     }

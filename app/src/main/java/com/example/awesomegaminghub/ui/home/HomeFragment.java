@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
         else{
             ((MainActivity)getActivity()).enableChat();
         }
-        changePhoto(2);
+        changePhoto(5);
         final TextView userTextView = getActivity().findViewById(R.id.textView);
         userTextView.setText(user.getUsername());
         //final TextView textView = binding.textHome;

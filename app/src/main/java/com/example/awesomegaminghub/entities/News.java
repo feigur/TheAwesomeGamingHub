@@ -12,7 +12,7 @@ public class News {
     private ArrayList<String> news;
 
     public News(){
-        this.news= new ArrayList<String>(5);
+        this.news= new ArrayList<String>(lengthOfNews);
         for (int i = 0; i < lengthOfNews; i++) {
             news.add("N/A");
         }
