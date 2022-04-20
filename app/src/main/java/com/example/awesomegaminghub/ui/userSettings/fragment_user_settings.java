@@ -1,60 +1,170 @@
 package com.example.awesomegaminghub.ui.userSettings;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.awesomegaminghub.MainActivity;
 import com.example.awesomegaminghub.R;
+import com.example.awesomegaminghub.databinding.FragmentAdminSettingsBinding;
+import com.example.awesomegaminghub.databinding.FragmentUserSettingsBinding;
+import com.example.awesomegaminghub.entities.Account;
+import com.google.gson.Gson;
 
 
 public class fragment_user_settings extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private FragmentUserSettingsBinding binding;
+    private ImageView pic1;
+    private ImageView pic2;
+    private ImageView pic3;
+    private ImageView pic4;
+    private ImageView pic5;
+    private ImageView pic6;
+    private ImageView pic7;
+    private ImageView pic8;
+    private ImageView pic9;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Handler handler = new Handler();
+    private Runnable runnable;
+    private int count;
 
-    public fragment_user_settings() {
-        // Required empty public constructor
-    }
+    private Account user;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UserSettingsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static fragment_user_settings newInstance(String param1, String param2) {
-        fragment_user_settings fragment = new fragment_user_settings();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                         ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        binding = FragmentUserSettingsBinding.inflate(inflater, container, false);
+        init();
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+        Gson gson = new Gson();
+        String json = sharedPref.getString("loggedUser", "");
+        user = gson.fromJson(json, Account.class);
+
+        return binding.getRoot();
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_settings, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        pic1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changePhoto(1);
+            }
+        });
+        pic2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changePhoto(2);
+            }
+        });
+        pic3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changePhoto(3);
+            }
+        });
+        pic4.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changePhoto(4);
+            }
+        });
+        pic5.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changePhoto(5);
+            }
+        });
+        pic6.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changePhoto(6);
+            }
+        });
+        pic7.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changePhoto(7);
+            }
+        });
+        pic8.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changePhoto(8);
+            }
+        });
+        pic9.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changePhoto(9);
+            }
+        });
     }
+
+    private void changePhoto(Integer photoID){
+        int delay = 100;
+        count = 0;
+        String username = user.getUsername();
+        handler.postDelayed( runnable = new Runnable() {
+            public void run() {
+                user = ((MainActivity)getActivity()).setPhotoID(username,photoID);
+                if(count < 2){
+                    count = count + 1;
+                    handler.postDelayed(runnable, delay);
+                }
+                else{
+                    Gson gson = new Gson();
+                    String json = gson.toJson(user);
+                    editor.putString("loggedUser",json);
+                    editor.apply();
+                    ((MainActivity)getActivity()).changeProfilePic();
+                    handler.removeCallbacks(runnable);
+                }
+
+            }
+        }, delay);
+
+        super.onResume();
+    }
+
+    private void init(){
+        pic1 = binding.profPic1;
+        pic2 = binding.profPic2;
+        pic3 = binding.profPic3;
+        pic4 = binding.profPic4;
+        pic5 = binding.profPic5;
+        pic6 = binding.profPic6;
+        pic7 = binding.profPic7;
+        pic8 = binding.profPic8;
+        pic9 = binding.profPic9;
+        pic1.setImageResource(R.drawable.pic_1);
+        pic2.setImageResource(R.drawable.pic_2);
+        pic3.setImageResource(R.drawable.pic_3);
+        pic4.setImageResource(R.drawable.pic_4);
+        pic5.setImageResource(R.drawable.pic_5);
+        pic6.setImageResource(R.drawable.pic_6);
+        pic7.setImageResource(R.drawable.pic_7);
+        pic8.setImageResource(R.drawable.pic_8);
+        pic9.setImageResource(R.drawable.pic_9);
+    }
+
+
 }

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.SearchView;
 
 import com.example.awesomegaminghub.entities.Account;
 import com.example.awesomegaminghub.entities.Chat;
