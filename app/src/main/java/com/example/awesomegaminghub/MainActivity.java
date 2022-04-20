@@ -427,6 +427,26 @@ public class MainActivity extends AppCompatActivity {
         return returner;
     }
 
+    public News getNews(){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        News returner;
+        networkManager.getNews(new iNetworkCallback<News>() {
+            @Override
+            public void onSuccess(News result) {
+                mNews = result;
+                Log.d(TAG, "Get news list: " + mNews.getNews());
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get news: " + errorString);
+            }
+        });
+        returner = mNews;
+        mNews = null;
+        return returner;
+    }
+
     public HighScore getHighScore(String gameId){
         NetworkManager networkManager = NetworkManager.getInstance(this);
         HighScore returner;
@@ -467,6 +487,22 @@ public class MainActivity extends AppCompatActivity {
         String accountInfo = username;
         Chat returner;
         networkManager.sendChat(accountInfo,msg, new iNetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d(TAG, "sent to chat:" + result);
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get Chat: " + errorString);
+            }
+        });
+    }
+
+    public void sendNews(String username,String title, String story){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        News returner;
+        networkManager.addNews(username, title, story, new iNetworkCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.d(TAG, "sent to chat:" + result);
