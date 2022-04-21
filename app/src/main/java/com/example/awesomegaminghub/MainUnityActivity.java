@@ -1,0 +1,131 @@
+package com.example.awesomegaminghub;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
+
+import com.example.awesomegaminghub.entities.HighScore;
+import com.example.awesomegaminghub.networking.NetworkManager;
+import com.example.awesomegaminghub.networking.iNetworkCallback;
+
+public class MainUnityActivity extends OverrideUnityActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //addControlsToUnityFrame();
+        Intent intent = getIntent();
+        handleIntent(intent);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+        setIntent(intent);
+    }
+
+//    @Override
+//    public void onBackPressed () {
+//
+//    }
+
+    void handleIntent(Intent intent) {
+        if(intent == null || intent.getExtras() == null) return;
+
+        if(intent.getExtras().containsKey("doQuit"))
+            if(mUnityPlayer != null) {
+                finish();
+            }
+    }
+
+    @Override
+    protected void showMainActivity(String setToColor) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("setColor", setToColor);
+        startActivity(intent);
+    }
+
+    @Override public void onUnityPlayerUnloaded() {
+        showMainActivity("");
+    }
+
+    public void addControlsToUnityFrame() {
+        FrameLayout layout = mUnityPlayer;
+        {
+            Button myButton = new Button(this);
+            myButton.setText("Show Main");
+            myButton.setX(10);
+            myButton.setY(500);
+
+            myButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    showMainActivity("");
+                }
+            });
+            layout.addView(myButton, 300, 200);
+        }
+
+        {
+            Button myButton = new Button(this);
+            myButton.setText("Send Msg");
+            myButton.setX(320);
+            myButton.setY(500);
+            myButton.setOnClickListener( new View.OnClickListener() {
+                public void onClick(View v) {
+                    mUnityPlayer.UnitySendMessage("Cube", "ChangeColor", "yellow");
+                }
+            });
+            layout.addView(myButton, 300, 200);
+        }
+
+        {
+            Button myButton = new Button(this);
+            myButton.setText("Unload");
+            myButton.setX(630);
+            myButton.setY(500);
+
+            myButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    mUnityPlayer.unload();
+                }
+            });
+            layout.addView(myButton, 300, 200);
+        }
+
+        {
+            Button myButton = new Button(this);
+            myButton.setText("Finish");
+            myButton.setX(630);
+            myButton.setY(800);
+
+            myButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            layout.addView(myButton, 300, 200);
+        }
+    }
+
+    private static String TAG = "MainUnityActivity";
+
+    public void addHighScore(String username, String score, String gameId){
+        NetworkManager networkManager = NetworkManager.getInstance(getApplicationContext());
+        Log.d(TAG, (networkManager == null) ? "Yes" : "No");
+        Log.d(TAG, "Test");
+        networkManager.addHighScore(username,score,gameId, new iNetworkCallback<HighScore>() {
+            @Override
+            public void onSuccess(HighScore result) {
+                Log.d(TAG, "score added");
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.e(TAG, "Failed to get Chat: " + errorString);
+            }
+        });
+    }
+}
