@@ -82,6 +82,12 @@ public class NewsFragment extends Fragment {
         else{
             addNews.setVisibility(View.GONE);
         }
+        addNews.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.newsfeed_to_addnewspage);
+            }
+        });
     }
 
     private void getData(){

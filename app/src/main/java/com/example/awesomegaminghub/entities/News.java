@@ -13,7 +13,7 @@ public class News {
 
     public News(){
         this.ID = 2;
-        this.news= new ArrayList<String>(lengthOfNews);
+        this.news= new ArrayList<>(lengthOfNews);
         this.titles = new ArrayList<>(lengthOfNews);
         this.writers = new ArrayList<>(lengthOfNews);
         for (int i = 0; i < lengthOfNews; i++) {

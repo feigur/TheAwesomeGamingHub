@@ -47,4 +47,5 @@ public class SingleNewsPage extends Fragment {
         return view;
     }
 
+
 }
