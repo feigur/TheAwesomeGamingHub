@@ -90,7 +90,9 @@ public class ChatFragment extends Fragment {
             public void onClick(View view) {
                 String msg;
                 msg = inputChat.getText().toString();
-                ((MainActivity)getActivity()).sendChat(chatUser.getUsername(),msg);
+                if(!msg.equals("")){
+                    ((MainActivity)getActivity()).sendChat(chatUser.getUsername(),msg);
+                }
                 inputChat.setText("");
             }
         });

@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -17,9 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.awesomegaminghub.MainActivity;
@@ -35,7 +31,7 @@ public class fragment_admin_settings extends Fragment {
     private ArrayAdapter<String> usersListView;
     private List<Account> usersList;
     private int selectedUser;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private Runnable runnable;
     private SharedPreferences sharedPref;
     private Account admin;
@@ -50,7 +46,7 @@ public class fragment_admin_settings extends Fragment {
                 new ViewModelProvider(this).get(AdminSettingsViewModel.class);
 
         binding = FragmentAdminSettingsBinding.inflate(inflater, container, false);
-        usersListView = new ArrayAdapter<String>(((MainActivity)getActivity()), android.R.layout.simple_list_item_1);
+        usersListView = new ArrayAdapter<>(((MainActivity)getActivity()), android.R.layout.simple_list_item_1);
         binding.userListView.setAdapter(usersListView);
         View root = binding.getRoot();
         sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
