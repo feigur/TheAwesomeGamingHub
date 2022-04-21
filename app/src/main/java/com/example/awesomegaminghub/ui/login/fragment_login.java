@@ -167,19 +167,6 @@ public class fragment_login extends Fragment {
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 getDataLogin(view);
-                /*Account loggedInAccount = ((MainActivity)getActivity()).login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-                if(loggedInAccount != null){
-                    Gson gson = new Gson();
-                    String json = gson.toJson(loggedInAccount);
-                    editor.putString("loggedUser",json);
-                    editor.apply();
-                    Navigation.findNavController(view).navigate(R.id.action_username_to_nav_home);
-                }
-                else{
-                    loadingProgressBar.setVisibility(View.INVISIBLE);
-                    loginViewModel.loginFailed();
-                }*/
             }
         });
 

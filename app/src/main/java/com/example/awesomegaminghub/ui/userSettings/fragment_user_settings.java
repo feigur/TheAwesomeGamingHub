@@ -7,7 +7,10 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,7 +45,10 @@ public class fragment_user_settings extends Fragment {
 
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
+    private Button button;
 
+    private TextView oldPass;
+    private TextView newPass;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                          ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +80,26 @@ public class fragment_user_settings extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        button = binding.getRoot().findViewById(R.id.buttonChangePass);
+        oldPass = binding.getRoot().findViewById(R.id.oldPass);
+        newPass = binding.getRoot().findViewById(R.id.newPass);
+        newPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focused) {
+                InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (focused)
+                    keyboard.showSoftInput(newPass, 0);
+                else
+                    keyboard.hideSoftInputFromWindow(newPass.getWindowToken(), 0);
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).setPassword(user.getUsername(),oldPass.getText().toString(),newPass.getText().toString());
+            }
+        });
 
         pic1.setOnClickListener(new View.OnClickListener(){
             @Override

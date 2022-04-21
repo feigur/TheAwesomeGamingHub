@@ -58,19 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // getNews
-        //networkManager.getNews(new iNetworkCallback<News>() {
-        //    @Override
-        //    public void onSuccess(News result) {
-        //        mNews = result;
-        //        Log.d(TAG, "Get news : " + mNews.getNews());
-        //    }
 
-        //    @Override
-        //    public void onFailure(String errorString) {
-        //        Log.e(TAG, "Failed to get news: " + errorString);
-        //    }
-        //});
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
@@ -317,6 +305,28 @@ public class MainActivity extends AppCompatActivity {
         return mAccount;
     }
 
+    public Account setPassword(String user, String oldPass, String newPass){
+        NetworkManager networkManager = NetworkManager.getInstance(this);
+        String passInfo = "username=" + user + "&password=" + oldPass + "&newpassword="+newPass;
+        networkManager.setPassword(passInfo, new iNetworkCallback<Account>() {
+            @Override
+            public void onSuccess(Account result) {
+                mAccount = result;
+                if(mAccount != null){
+                    Log.d(TAG, "Get user : " + mAccount.getUsername() + " isAdmin: " +  mAccount.getAdmin());
+                }
+
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                mAccount = null;
+                Log.e(TAG, "Failed to get user: " + errorString);
+            }
+        });
+        return mAccount;
+    }
+
     public Account setUnMuted(String admin, String username){
         NetworkManager networkManager = NetworkManager.getInstance(this);
         String loginInfo = "username=" + admin + "&mute=" + username;
@@ -434,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(News result) {
                 mNews = result;
-                Log.d(TAG, "Get news list: " + mNews.getNews());
+                Log.d(TAG, "Get news list: ");
             }
 
             @Override
@@ -442,6 +452,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "Failed to get news: " + errorString);
             }
         });
+
         returner = mNews;
         mNews = null;
         return returner;
