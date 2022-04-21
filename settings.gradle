@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "AwesomeGamingHub"
 include ':app'
 include ':unityLibrary'
-project(':unityLibrary').projectDir=new File('HI-HBV601G\\androidBuild\\unityLibrary')
+project(':unityLibrary').projectDir=new File('androidBuild\\unityLibrary')
