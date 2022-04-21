@@ -24,7 +24,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="login_View">"Please login or create an account"</string>
-
+    <string name="game_view_content_description">Game view</string>
     <string name="chatInput">"Input message here!"</string>
     <string name="sendButton">"Send"</string>
 
